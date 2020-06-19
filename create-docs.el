@@ -32,4 +32,5 @@
       (org-export-to-file 'texinfo "./setenv-file.texi"
         nil nil nil nil nil (lambda (file) (org-texinfo-compile file))))))
 
+(provide 'create-docs)
 ;;; create-docs.el ends here
