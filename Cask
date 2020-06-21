@@ -10,4 +10,5 @@
  (depends-on "cask")
  (depends-on "ert-runner")
  (depends-on "markdown-mode")
- (depends-on "ox-gfm"))
+ (depends-on "ox-gfm")
+ (depends-on "projectile"))

@@ -8,4 +8,4 @@ test:
 
 .PHONY: docs
 docs:
-	cask exec emacs -batch -l create-docs.el -f create-docs
+	cask exec emacs -batch -l doc/create-docs.el -f create-docs

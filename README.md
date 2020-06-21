@@ -1,12 +1,13 @@
+# setenv-file
+
 Set or unset environment variables from a file.
 
-This package provides an interactive function `setenv-file` to set
-environment variables defined in a file. With one `C-u` prefix
-argument, `setenv-file` unsets the environment variables defined in
-the file.
+This package provides an interactive function `setenv-file` to set environment
+variables defined in a file. With one `C-u` prefix argument, `setenv-file`
+unsets the environment variables defined in the file.
 
-When used interactively, `setenv-file` prompts for a file, defaulting
-to the directory `setenv-file-dir`.
+When used interactively, `setenv-file` prompts for a file, defaulting to the
+directory `setenv-file-dir`.
 
 
 # How To
@@ -19,9 +20,8 @@ BAR=$FOO/bar
 ОФИС=ДОМ
 ```
 
-Set those environment variables in Emacs using `M-x setenv-file`, and
-navigate to the file. View your new environment variables with `M-x
-getenv`.
+Set those environment variables in Emacs using `M-x setenv-file`, and navigate
+to the file. View your new environment variables with `M-x getenv`.
 
 To customize the default directory where you keep your env files:
 
@@ -32,10 +32,9 @@ To customize the default directory where you keep your env files:
 
 # File Format
 
-Each line in the file should be in a `KEY=VALUE` format, with one
-entry per line. This package does not invoke a shell to interpret the
-file, so most shell-isms will not work. However, as a convenience, the
-env file may:
+Each line in the file should be in a `KEY=VALUE` format, with one entry per
+line. This package does not invoke a shell to interpret the file, so most
+shell-isms will not work. However, as a convenience, the env file may:
 
 -   Define simple shell-like variables
 -   Use existing environment variables

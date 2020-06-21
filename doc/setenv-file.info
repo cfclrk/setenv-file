@@ -2,10 +2,24 @@ This is setenv-file.info, produced by makeinfo version 6.7 from
 setenv-file.texi.
 
 
-File: setenv-file.info,  Node: Top,  Next: How To,  Up: (dir)
+File: setenv-file.info,  Node: Top,  Next: setenv-file,  Up: (dir)
 
 setenv-file
 ***********
+
+* Menu:
+
+* setenv-file::
+* How To::
+* File Format::
+* Development::
+* See Also::
+
+
+File: setenv-file.info,  Node: setenv-file,  Next: How To,  Prev: Top,  Up: Top
+
+1 setenv-file
+*************
 
 Set or unset environment variables from a file.
 
@@ -17,17 +31,10 @@ file.
    When used interactively, ‘setenv-file’ prompts for a file, defaulting
 to the directory ‘setenv-file-dir’.
 
-* Menu:
-
-* How To::
-* File Format::
-* Development::
-* See Also::
-
 
-File: setenv-file.info,  Node: How To,  Next: File Format,  Prev: Top,  Up: Top
+File: setenv-file.info,  Node: How To,  Next: File Format,  Prev: setenv-file,  Up: Top
 
-1 How To
+2 How To
 ********
 
 Create a file with environment variable definitions.  For example:
@@ -47,7 +54,7 @@ getenv’.
 
 File: setenv-file.info,  Node: File Format,  Next: Development,  Prev: How To,  Up: Top
 
-2 File Format
+3 File Format
 *************
 
 Each line in the file should be in a ‘KEY=VALUE’ format, with one entry
@@ -62,7 +69,7 @@ file may:
 
 File: setenv-file.info,  Node: Development,  Next: See Also,  Prev: File Format,  Up: Top
 
-3 Development
+4 Development
 *************
 
   1. Install dependencies: ‘make install’
@@ -77,7 +84,7 @@ File: setenv-file.info,  Node: Development,  Next: See Also,  Prev: File Format,
 
 File: setenv-file.info,  Node: See Also,  Prev: Development,  Up: Top
 
-4 See Also
+5 See Also
 **********
 
    • parsenv (https://github.com/articuluxe/parsenv)
@@ -89,10 +96,11 @@ File: setenv-file.info,  Node: See Also,  Prev: Development,  Up: Top
 
 Tag Table:
 Node: Top83
-Node: How To631
-Node: File Format1144
-Node: Development1649
-Node: See Also2059
+Node: setenv-file260
+Node: How To764
+Node: File Format1285
+Node: Development1790
+Node: See Also2200
 
 End Tag Table
 

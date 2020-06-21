@@ -1,6 +1,8 @@
 #+TITLE: setenv-file
 #+OPTIONS: toc:nil
 
+* setenv-file                                             :readme:commentary:
+
 Set or unset environment variables from a file.
 
 This package provides an interactive function =setenv-file= to set environment
@@ -10,7 +12,7 @@ unsets the environment variables defined in the file.
 When used interactively, =setenv-file= prompts for a file, defaulting to the
 directory =setenv-file-dir=.
 
-* How To
+* How To                                                  :readme:commentary:
 
 Create a file with environment variable definitions. For example:
 
@@ -29,7 +31,7 @@ To customize the default directory where you keep your env files:
   (setq setenv-file-dir (expand-file-name "~/.env/"))
 #+end_src
 
-* File Format
+* File Format                                             :readme:commentary:
 
 Each line in the file should be in a =KEY=VALUE= format, with one entry per
 line. This package does not invoke a shell to interpret the file, so most
@@ -39,7 +41,7 @@ shell-isms will not work. However, as a convenience, the env file may:
   - Use existing environment variables
   - Tildes are expanded if they are the first character of the value
 
-* Development
+* Development                                                        :readme:
 
   1. Install dependencies: =make install=
   2. Run tests: =make test=
@@ -50,7 +52,7 @@ Generate documentation:
   2. Generate =README.md= with =M-x org-gfm-export-to-markdown=, then
      =fill-region= on the whole buffer.
 
-* See Also
+* See Also                                                           :readme:
 
   - [[https://github.com/articuluxe/parsenv][parsenv]]
   - [[https://github.com/wbolster/emacs-direnv][emacs-direnv]]
@@ -60,4 +62,5 @@ Generate documentation:
 
 - Can =make doc= create the Commentary section by exporting a portion of
   =setenv-file.org= and putting it into =setenv-file.el=?
-- GitHub Action to run tests
+- Add GitHub Action to run tests
+- I would rather do the documentation export with pandoc if possible.

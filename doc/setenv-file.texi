@@ -1,6 +1,6 @@
 \input texinfo    @c -*- texinfo -*-
 @c %**start of header
-@setfilename ./setenv-file.info
+@setfilename /Users/chris.clark/Projects/setenv-file/doc/setenv-file.info
 @settitle setenv-file
 @documentencoding UTF-8
 @documentlanguage en
@@ -15,6 +15,18 @@
 @ifnottex
 @node Top
 @top setenv-file
+@end ifnottex
+
+@menu
+* setenv-file::
+* How To::
+* File Format::
+* Development::
+* See Also::
+@end menu
+
+@node setenv-file
+@chapter setenv-file
 
 Set or unset environment variables from a file.
 
@@ -24,14 +36,6 @@ unsets the environment variables defined in the file.
 
 When used interactively, @samp{setenv-file} prompts for a file, defaulting to the
 directory @samp{setenv-file-dir}.
-@end ifnottex
-
-@menu
-* How To::
-* File Format::
-* Development::
-* See Also::
-@end menu
 
 @node How To
 @chapter How To
