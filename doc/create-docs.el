@@ -21,7 +21,11 @@
     (create-commentary)))
 
 (defun create-texinfo ()
-  "Create texinfo docs."
+  "Create texinfo docs.
+
+This exports sections tagged :info: in setenv-file.org to
+texinfo. This creates two new files: a .texi file and a .info
+file."
   (with-temp-buffer
     (insert-file-contents (proj-file "doc/setenv-file.org"))
     (let ((org-export-with-tags nil))
@@ -29,7 +33,11 @@
         nil nil nil nil nil (lambda (file) (org-texinfo-compile file))))))
 
 (defun create-readme ()
-  "Create README.md."
+  "Create the README.md.
+
+This exports sections tagged :readme: in setenv-file.org to a
+README.md."
+  ;; Run an org export to github-flavored-markdown
   (with-temp-buffer
     (insert-file-contents (proj-file "doc/setenv-file.org"))
     (let ((org-export-select-tags '("readme"))
@@ -45,10 +53,12 @@
     (write-file (proj-file "README.md"))))
 
 (defun create-commentary ()
-  "Create the Commentary section of the main package file.
+  "Create the Commentary section in setenv-file.el.
 
-This exports sections tagged :commentary: to markdown, then puts
-the markdown in the Commentary section of setenv-file.el."
+This exports sections tagged :commentary: in setenv-file.org to
+markdown, then puts the markdown in the Commentary section of
+setenv-file.el."
+  ;; Run an org export to markdown
   (with-temp-buffer
     (insert-file-contents (proj-file "doc/setenv-file.org"))
     (let ((org-export-select-tags '("commentary"))
@@ -56,6 +66,7 @@ the markdown in the Commentary section of setenv-file.el."
           (org-export-show-temporary-export-buffer nil))
       (org-export-to-buffer 'md "*Org MD Export*")))
 
+  ;; Format the markdown and prepend a ";; " to every line
   (with-current-buffer "*Org MD Export*"
     (markdown-mode)
     (let ((fill-column 77))
@@ -63,6 +74,7 @@ the markdown in the Commentary section of setenv-file.el."
     (string-insert-rectangle (point-min) (point-max) ";; ")
     (whitespace-cleanup))
 
+  ;; Replace the Commentary section with the newly created markdown
   (with-temp-buffer
     (insert-file-contents (proj-file "setenv-file.el"))
     (let ((beg (search-forward ";;; Commentary:\n;;\n"))
