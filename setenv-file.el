@@ -40,10 +40,10 @@
 ;;
 ;; Each line in the file should be in a `KEY=VALUE` format, with one entry per
 ;; line. This package does not invoke a shell to interpret the file, so most
-;; shell-isms will not work. However, as a convenience, the env file may:
+;; shell-isms will not work. However, the env file may:
 ;;
-;; -   Define simple shell-like variables
 ;; -   Use existing environment variables
+;; -   Define and environment variable and use it in successive lines
 ;; -   Tildes are expanded if they are the first character of the value
 ;;
 ;;

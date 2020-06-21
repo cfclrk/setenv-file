@@ -62,13 +62,13 @@ To customize the default directory where you keep your env files:
 
 Each line in the file should be in a @samp{KEY=VALUE} format, with one entry per
 line. This package does not invoke a shell to interpret the file, so most
-shell-isms will not work. However, as a convenience, the env file may:
+shell-isms will not work. However, the env file may:
 
 @itemize
 @item
-Define simple shell-like variables
-@item
 Use existing environment variables
+@item
+Define and environment variable and use it in successive lines
 @item
 Tildes are expanded if they are the first character of the value
 @end itemize
@@ -81,16 +81,8 @@ Tildes are expanded if they are the first character of the value
 Install dependencies: @samp{make install}
 @item
 Run tests: @samp{make test}
-@end enumerate
-
-Generate documentation:
-
-@enumerate
 @item
-Generate info with @samp{M-x org-info-export-to-info}
-@item
-Generate @samp{README.md} with @samp{M-x org-gfm-export-to-markdown}, then
-@samp{fill-region} on the whole buffer.
+Generate documentation: @samp{make docs}
 @end enumerate
 
 @node See Also

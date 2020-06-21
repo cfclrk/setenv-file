@@ -34,10 +34,10 @@ To customize the default directory where you keep your env files:
 
 Each line in the file should be in a `KEY=VALUE` format, with one entry per
 line. This package does not invoke a shell to interpret the file, so most
-shell-isms will not work. However, as a convenience, the env file may:
+shell-isms will not work. However, the env file may:
 
--   Define simple shell-like variables
 -   Use existing environment variables
+-   Define and environment variable and use it in successive lines
 -   Tildes are expanded if they are the first character of the value
 
 
@@ -45,12 +45,7 @@ shell-isms will not work. However, as a convenience, the env file may:
 
 1.  Install dependencies: `make install`
 2.  Run tests: `make test`
-
-Generate documentation:
-
-1.  Generate info with `M-x org-info-export-to-info`
-2.  Generate `README.md` with `M-x org-gfm-export-to-markdown`, then
-    `fill-region` on the whole buffer.
+3.  Generate documentation: `make docs`
 
 
 # See Also
