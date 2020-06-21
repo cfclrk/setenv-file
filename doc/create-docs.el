@@ -70,7 +70,7 @@ the markdown in the Commentary section of setenv-file.el."
      (delete-region beg end)
      (goto-char beg)
      (insert-buffer-substring "*Org MD Export*")
-     (write-file (proj-file "doc/setenv-file.el")))))
+     (write-file (proj-file "setenv-file.el")))))
 
 (defun proj-file (rel-path)
   "Return the absolute path to REL-PATH.
