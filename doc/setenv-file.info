@@ -12,8 +12,6 @@ setenv-file
 * setenv-file::
 * How To::
 * File Format::
-* Development::
-* See Also::
 
 
 File: setenv-file.info,  Node: setenv-file,  Next: How To,  Prev: Top,  Up: Top
@@ -52,7 +50,7 @@ getenv’.
      (setq setenv-file-dir (expand-file-name "~/.env/"))
 
 
-File: setenv-file.info,  Node: File Format,  Next: Development,  Prev: How To,  Up: Top
+File: setenv-file.info,  Node: File Format,  Prev: How To,  Up: Top
 
 3 File Format
 *************
@@ -62,39 +60,16 @@ per line.  This package does not invoke a shell to interpret the file,
 so most shell-isms will not work.  However, the env file may:
 
    • Use existing environment variables
-   • Define and environment variable and use it in successive lines
-   • Tildes are expanded if they are the first character of the value
-
-
-File: setenv-file.info,  Node: Development,  Next: See Also,  Prev: File Format,  Up: Top
-
-4 Development
-*************
-
-  1. Install dependencies: ‘make install’
-  2. Run tests: ‘make test’
-  3. Generate documentation: ‘make docs’
-
-
-File: setenv-file.info,  Node: See Also,  Prev: Development,  Up: Top
-
-5 See Also
-**********
-
-   • parsenv (https://github.com/articuluxe/parsenv)
-   • emacs-direnv (https://github.com/wbolster/emacs-direnv)
-   • projectile-direnv
-     (https://github.com/christianromney/projectile-direnv)
+   • Define an environment variable and use it in successive lines
+   • A ‘~’ is expanded if it is the first character in the value
 
 
 
 Tag Table:
 Node: Top83
-Node: setenv-file260
-Node: How To764
-Node: File Format1285
-Node: Development1800
-Node: See Also2046
+Node: setenv-file231
+Node: How To735
+Node: File Format1256
 
 End Tag Table
 

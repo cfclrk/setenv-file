@@ -37,8 +37,8 @@ line. This package does not invoke a shell to interpret the file, so most
 shell-isms will not work. However, the env file may:
 
 -   Use existing environment variables
--   Define and environment variable and use it in successive lines
--   Tildes are expanded if they are the first character of the value
+-   Define an environment variable and use it in successive lines
+-   A `~` is expanded if it is the first character in the value
 
 
 # Development
@@ -50,6 +50,7 @@ shell-isms will not work. However, the env file may:
 
 # See Also
 
--   [parsenv](https://github.com/articuluxe/parsenv)
 -   [emacs-direnv](https://github.com/wbolster/emacs-direnv)
+-   [envrc](https://github.com/purcell/envrc)
+-   [parsenv](https://github.com/articuluxe/parsenv)
 -   [projectile-direnv](https://github.com/christianromney/projectile-direnv)

@@ -28,7 +28,8 @@ texinfo. This creates two new files: a .texi file and a .info
 file."
   (with-temp-buffer
     (insert-file-contents (proj-file "doc/setenv-file.org"))
-    (let ((org-export-with-tags nil))
+    (let ((org-export-select-tags '("info"))
+          (org-export-with-tags nil))
       (org-export-to-file 'texinfo (proj-file "doc/setenv-file.texi")
         nil nil nil nil nil (lambda (file) (org-texinfo-compile file))))))
 
@@ -77,8 +78,8 @@ setenv-file.el."
   ;; Replace the Commentary section with the newly created markdown
   (with-temp-buffer
     (insert-file-contents (proj-file "setenv-file.el"))
-    (let ((beg (search-forward ";;; Commentary:\n;;\n"))
-         (end (- (search-forward ";;; Code:") 13)))
+    (let ((beg (search-forward ";;; Commentary:\n"))
+         (end (- (search-forward ";;; Code:") 10)))
      (delete-region beg end)
      (goto-char beg)
      (insert-buffer-substring "*Org MD Export*")

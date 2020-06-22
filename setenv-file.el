@@ -7,7 +7,6 @@
 
 ;;; Commentary:
 ;;
-;;
 ;; # setenv-file
 ;;
 ;; Set or unset environment variables from a file.
@@ -43,9 +42,8 @@
 ;; shell-isms will not work. However, the env file may:
 ;;
 ;; -   Use existing environment variables
-;; -   Define and environment variable and use it in successive lines
-;; -   Tildes are expanded if they are the first character of the value
-;;
+;; -   Define an environment variable and use it in successive lines
+;; -   A `~` is expanded if it is the first character in the value
 ;;
 ;;
 ;;; Code:
@@ -90,7 +88,8 @@ variables defined in file F."
         (setenv-file-unset pairs)
       (setenv-file-export pairs))))
 
-;; TODO: make funcs below here private
+;; Private
+;; ----------------------------------------------------------------------------
 
 (defun setenv-file-export (pairs)
   "Add PAIRS to `process-environment'.
@@ -105,9 +104,6 @@ PAIRS is a list of pairs, where each pair is an environment
 variable name and value. The second element of each pair is
 discarded."
   (--each pairs (setenv-file--unset-name (car it))))
-
-;; Private
-;; ----------------------------------------------------------------------------
 
 (defun setenv-file--export-pair (pair)
   "Set or unset an environment variable.

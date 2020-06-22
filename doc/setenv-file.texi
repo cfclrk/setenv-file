@@ -21,8 +21,6 @@
 * setenv-file::
 * How To::
 * File Format::
-* Development::
-* See Also::
 @end menu
 
 @node setenv-file
@@ -68,33 +66,9 @@ shell-isms will not work. However, the env file may:
 @item
 Use existing environment variables
 @item
-Define and environment variable and use it in successive lines
+Define an environment variable and use it in successive lines
 @item
-Tildes are expanded if they are the first character of the value
-@end itemize
-
-@node Development
-@chapter Development
-
-@enumerate
-@item
-Install dependencies: @samp{make install}
-@item
-Run tests: @samp{make test}
-@item
-Generate documentation: @samp{make docs}
-@end enumerate
-
-@node See Also
-@chapter See Also
-
-@itemize
-@item
-@uref{https://github.com/articuluxe/parsenv, parsenv}
-@item
-@uref{https://github.com/wbolster/emacs-direnv, emacs-direnv}
-@item
-@uref{https://github.com/christianromney/projectile-direnv, projectile-direnv}
+A @samp{~} is expanded if it is the first character in the value
 @end itemize
 
 @bye
