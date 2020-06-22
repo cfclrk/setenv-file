@@ -83,9 +83,10 @@ Prefixed with one \\[universal-argument], unset the environment
 variables defined in file F."
   (interactive (list (read-file-name "ENV file: " setenv-file-dir)))
   (let* ((lines (s-lines (s-trim (f-read-text f))))
-         (pairs (--map (s-split "=" it) lines)))
+         (pairs (--map (s-split "=" it) lines))
+         (names (-map 'car pairs)))
     (if current-prefix-arg
-        (setenv-file--unset pairs)
+        (setenv-file--unset names)
       (setenv-file--export pairs))))
 
 ;; Private
@@ -97,13 +98,12 @@ PAIRS is a list of pairs, where each pair is an environment
 variable name and value."
   (-each pairs 'setenv-file--export-pair))
 
-;; TODO: this should just take NAMES
-(defun setenv-file--unset (pairs)
-  "Remove PAIRS from `process-environment'.
-PAIRS is a list of pairs, where each pair is an environment
-variable name and value. The second element of each pair is
-discarded."
-  (--each pairs (setenv-file--unset-name (car it))))
+(defun setenv-file--unset (names)
+  "Remove NAMES from `process-environment'.
+NAMES is a list environment variable names which may or may not
+be currently set. This function removes each environment variable
+that is currently present in `process-environment'."
+  (--each names (setenv-file--unset-name it)))
 
 (defun setenv-file--export-pair (pair)
   "Set or unset an environment variable.

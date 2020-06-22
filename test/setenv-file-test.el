@@ -67,8 +67,7 @@ multibyte env vars."
   "Test running `setenv-file--unset' to unset a simple env var."
   (with-process-environment
    '("FOO=foo" "BAR=bar" "BAZ=baz")
-   (setenv-file--unset '(("FOO" "foo")
-                        ("BAR" "bar")))
+   (setenv-file--unset '("FOO" "BAR"))
    (should (equal nil (getenv "FOO")))
    (should (equal nil (getenv "BAR")))
    (should (equal "baz" (getenv "BAZ")))
