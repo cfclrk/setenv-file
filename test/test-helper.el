@@ -9,15 +9,18 @@
 (require 'cask)
 (require 'dash)
 (require 'f)
+(require 'projectile)
 
-(defvar setenv-file/root-dir (f-dirname (f-dirname (f-this-file))))
-(defvar setenv-file/test-dir (f-dirname (f-this-file)))
+(defun proj-file (rel-path)
+  "Return the absolute path to REL-PATH.
+REL-PATH is a path relative to this project root."
+  (f-join (projectile-project-root) rel-path))
 
 ;; Require all Elisp files in this package
-(let* ((cask-bundle (cask-setup setenv-file/root-dir))
+(let* ((cask-bundle (cask-setup (projectile-project-root)))
        (proj-files (cask-files cask-bundle))
        (el-files (--filter (f-ext? it "el") proj-files))
-       (abs-el-files (--map (f-join setenv-file/root-dir it) el-files)))
+       (abs-el-files (-map 'proj-file el-files)))
   (--each abs-el-files
     (require (intern (f-base it)) it)))
 

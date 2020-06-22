@@ -85,20 +85,20 @@ variables defined in file F."
   (let* ((lines (s-lines (s-trim (f-read-text f))))
          (pairs (--map (s-split "=" it) lines)))
     (if current-prefix-arg
-        (setenv-file-unset pairs)
-      (setenv-file-export pairs))))
+        (setenv-file--unset pairs)
+      (setenv-file--export pairs))))
 
 ;; Private
 ;; ----------------------------------------------------------------------------
 
-(defun setenv-file-export (pairs)
+(defun setenv-file--export (pairs)
   "Add PAIRS to `process-environment'.
 PAIRS is a list of pairs, where each pair is an environment
 variable name and value."
   (-each pairs 'setenv-file--export-pair))
 
 ;; TODO: this should just take NAMES
-(defun setenv-file-unset (pairs)
+(defun setenv-file--unset (pairs)
   "Remove PAIRS from `process-environment'.
 PAIRS is a list of pairs, where each pair is an environment
 variable name and value. The second element of each pair is
