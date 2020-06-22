@@ -47,8 +47,8 @@ shell-isms will not work. However, the env file may:
 2.  `make test`: Run unit tests
 3.  `make docs`: Runs an org export on `doc/setenv-file.org` to create:
     -   `README.md`
-    -   the package commentary in `setenv-file.el`
-    -   the texinfo in `doc/` from `doc/setenv-file.org`
+    -   package commentary in `setenv-file.el`
+    -   package texinfo in `doc/`
 
 
 # See Also
