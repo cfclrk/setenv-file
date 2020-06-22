@@ -1,9 +1,27 @@
 ;;; setenv-file.el --- Set or unset environment variables from a file  -*- lexical-binding: t; -*-
 
+;; Copyright (C) 2020 by Chris Clark
+
 ;; Author: Chris Clark <cfclrk@gmail.com>
-;; Version: 0.0.1
-;; Keywords: environment
 ;; URL: https://github.com/cfclrk/setenv-file.el
+;; Keywords: convenience, environment
+;; Package-Requires: ((emacs "24.1") (dash "2.17.0") (f "0.20.0") (s "1.12.0"))
+;; Package-Version: 0.0.1
+
+;; This file is NOT part of GNU Emacs.
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 ;;
@@ -98,32 +116,33 @@ PAIRS is a list of pairs, where each pair is an environment
 variable name and value."
   (-each pairs 'setenv-file--export-pair))
 
-(defun setenv-file--unset (names)
-  "Remove NAMES from `process-environment'.
-NAMES is a list environment variable names which may or may not
-be currently set. This function removes each environment variable
-that is currently present in `process-environment'."
-  (--each names (setenv-file--unset-name it)))
-
 (defun setenv-file--export-pair (pair)
-  "Set or unset an environment variable.
+  "Set an environment variable PAIR.
 PAIR is a list of size 2, where first element is an environment
 variable name and the second element is the value.
 
-If the second element (the value) begins with a ~, treat it as a
-file path and expand it."
+If the second element begins with a ~, it is treated as a file
+path and expand."
   (let ((name (car pair))
         (val (car (cdr pair))))
     (if (string-prefix-p "~" val)
         (setenv name (expand-file-name val) t)
       (setenv name val t))))
 
+(defun setenv-file--unset (names)
+  "Remove NAMES from `process-environment'.
+NAMES is a list of environment variable names which may or may
+not be currently set. This function removes each given name from
+`process-environment' if it is set."
+  (-each names #'setenv-file--unset-name))
+
 (defun setenv-file--unset-name (name)
-  "Unset environment variable NAME.
-Unset NAME by removing it from `process-environment'. While
-`setenv' claims to be able to unset environment variables, it
-really just sets the value of the variable to nil, so the
-variable still shows up when calling `getenv'."
+  "Unset the environment variable NAME.
+Unset NAME by removing it from `process-environment'.
+
+Note: calling `setenv' with a prefix argument sets an environment
+variable's value to nil, but it's name is still present. This
+function completely removes the environment variable."
   (let* ((name (if (multibyte-string-p name)
                    (encode-coding-string name locale-coding-system t)
                  name))
@@ -133,9 +152,8 @@ variable still shows up when calling `getenv'."
       process-environment)))
 
 (defun setenv-file--get-names ()
-  "Return the list of the names in `process-environment'."
+  "Return names of all current environment variables."
   (--map (car (s-split "=" it)) process-environment))
 
 (provide 'setenv-file)
-
 ;;; setenv-file.el ends here
