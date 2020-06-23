@@ -30,6 +30,7 @@ REL-PATH is a path relative to this project root."
 (defmacro with-process-environment (temp-environment &rest forms)
   "Set `process-environment' to TEMP-ENVIRONMENT and evaluate FORMS.
 After evaluating FORMS, the original `process-environment' is restored."
+  (declare (indent 1))
   `(let ((orig-process-environment process-environment))
     (unwind-protect
         (progn
