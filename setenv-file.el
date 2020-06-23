@@ -89,10 +89,9 @@
 When used interactively, `setenv-file' prompts for the file
 to load, defaulting to the directory `source-env-dir'.
 
-As a convenience the env file F may define simple bash-like
-variables, use existing environment variables, and tildes are
-expanded if they are the first character of the value. However,
-other shell-isms will not work.
+The env file F may make use of existing environment variables,
+and tildes are expanded if they are the first character of the
+value. However, other shell-isms will not work.
 
 Prefixed with one \\[universal-argument], unset the environment
 variables defined in file F."
@@ -111,7 +110,7 @@ variables defined in file F."
   "Add PAIRS to `process-environment'.
 PAIRS is a list of pairs, where each pair is an environment
 variable name and value."
-  (-each pairs 'setenv-file--export-pair))
+  (-each pairs #'setenv-file--export-pair))
 
 (defun setenv-file--export-pair (pair)
   "Set an environment variable PAIR.
@@ -119,7 +118,7 @@ PAIR is a list of size 2, where first element is an environment
 variable name and the second element is the value.
 
 If the second element begins with a ~, it is treated as a file
-path and expand."
+path and expanded."
   (let ((name (car pair))
         (val (car (cdr pair))))
     (if (string-prefix-p "~" val)
@@ -135,7 +134,8 @@ not be currently set. This function removes each given name from
 
 (defun setenv-file--unset-name (name)
   "Unset the environment variable NAME.
-Unset NAME by removing it from `process-environment'.
+Unset environment variable NAME by removing it from
+`process-environment' if it is there.
 
 Note: calling `setenv' with a prefix argument sets an environment
 variable's value to nil, but it's name is still present. This

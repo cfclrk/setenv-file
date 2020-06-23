@@ -56,4 +56,3 @@ shell-isms will not work. However, the env file may:
 -   [emacs-direnv](https://github.com/wbolster/emacs-direnv)
 -   [envrc](https://github.com/purcell/envrc)
 -   [parsenv](https://github.com/articuluxe/parsenv)
--   [projectile-direnv](https://github.com/christianromney/projectile-direnv)
