@@ -8,21 +8,22 @@
 ;;; Code:
 
 (require 'f)
+(require 'ox-extra)
 (require 'ox-gfm)
 (require 'ox-texinfo)
 (require 'projectile)
 (require 'markdown-mode)
+(require 'whitespace)
 
 (defun create-docs ()
-  "Export setenv-file.org to README.md and setenv-file.info."
+  "Create the package README.md, texinfo, and commentary."
   (let ((make-backup-files nil))
     (create-readme)
     (create-texinfo)
     (create-commentary)))
 
 (defun create-texinfo ()
-  "Create texinfo docs.
-
+  "Create the package texinfo docs.
 This exports sections tagged :info: in setenv-file.org to
 texinfo. This creates two new files: a .texi file and a .info
 file."
@@ -30,12 +31,12 @@ file."
     (insert-file-contents (proj-file "doc/setenv-file.org"))
     (let ((org-export-select-tags '("info"))
           (org-export-with-tags nil))
+      (ox-extras-activate '(ignore-headlines))
       (org-export-to-file 'texinfo (proj-file "doc/setenv-file.texi")
         nil nil nil nil nil (lambda (file) (org-texinfo-compile file))))))
 
 (defun create-readme ()
   "Create the README.md.
-
 This exports sections tagged :readme: in setenv-file.org to a
 README.md."
   ;; Run an org export to github-flavored-markdown
@@ -55,7 +56,6 @@ README.md."
 
 (defun create-commentary ()
   "Create the Commentary section in setenv-file.el.
-
 This exports sections tagged :commentary: in setenv-file.org to
 markdown, then puts the markdown in the Commentary section of
 setenv-file.el."
@@ -65,15 +65,28 @@ setenv-file.el."
     (let ((org-export-select-tags '("commentary"))
           (org-export-with-tags nil)
           (org-export-show-temporary-export-buffer nil))
+      (ox-extras-activate '(ignore-headlines))
       (org-export-to-buffer 'md "*Org MD Export*")))
 
-  ;; Format the markdown and prepend a ";; " to every line
+  ;; Format the markdown
   (with-current-buffer "*Org MD Export*"
     (markdown-mode)
     (let ((fill-column 77))
       (fill-region (point-min) (point-max)))
+
+    ;; Remove extra leading or trailing newlines
+    (let ((whitespace-style '(empty)))
+      (whitespace-cleanup))
+
+    ;; Prepend a ";; " to every line
     (string-insert-rectangle (point-min) (point-max) ";; ")
-    (whitespace-cleanup))
+
+    ;; Remove extra trailing spcaces
+    (let ((whitespace-style '(trailing)))
+      (whitespace-cleanup)))
+
+  (with-current-buffer "*Org MD Export*"
+    whitespace-style)
 
   ;; Replace the Commentary section with the newly created markdown
   (with-temp-buffer
@@ -82,6 +95,7 @@ setenv-file.el."
          (end (- (search-forward ";;; Code:") 10)))
      (delete-region beg end)
      (goto-char beg)
+     (insert "\n")
      (insert-buffer-substring "*Org MD Export*")
      (write-file (proj-file "setenv-file.el")))))
 

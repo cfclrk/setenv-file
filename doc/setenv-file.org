@@ -1,7 +1,7 @@
 #+TITLE: setenv-file
 #+OPTIONS: toc:nil
 
-* setenv-file                                        :readme:commentary:info:
+* setenv-file                                 :readme:commentary:info:ignore:
 
 Set or unset environment variables from a file.
 

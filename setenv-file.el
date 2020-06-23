@@ -24,9 +24,7 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;;
-;; # setenv-file
-;;
+
 ;; Set or unset environment variables from a file.
 ;;
 ;; This package provides an interactive function `setenv-file` to set
@@ -62,7 +60,6 @@
 ;; -   Use existing environment variables
 ;; -   Define an environment variable and use it in successive lines
 ;; -   A `~` is expanded if it is the first character in the value
-;;
 ;;
 ;;; Code:
 

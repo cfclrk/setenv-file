@@ -15,16 +15,6 @@
 @ifnottex
 @node Top
 @top setenv-file
-@end ifnottex
-
-@menu
-* setenv-file::
-* How To::
-* File Format::
-@end menu
-
-@node setenv-file
-@chapter setenv-file
 
 Set or unset environment variables from a file.
 
@@ -34,6 +24,12 @@ unsets the environment variables defined in the file.
 
 When used interactively, @samp{setenv-file} prompts for a file, defaulting to the
 directory @samp{setenv-file-dir}.
+@end ifnottex
+
+@menu
+* How To::
+* File Format::
+@end menu
 
 @node How To
 @chapter How To

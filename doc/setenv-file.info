@@ -2,22 +2,10 @@ This is setenv-file.info, produced by makeinfo version 6.7 from
 setenv-file.texi.
 
 
-File: setenv-file.info,  Node: Top,  Next: setenv-file,  Up: (dir)
+File: setenv-file.info,  Node: Top,  Next: How To,  Up: (dir)
 
 setenv-file
 ***********
-
-* Menu:
-
-* setenv-file::
-* How To::
-* File Format::
-
-
-File: setenv-file.info,  Node: setenv-file,  Next: How To,  Prev: Top,  Up: Top
-
-1 setenv-file
-*************
 
 Set or unset environment variables from a file.
 
@@ -29,10 +17,15 @@ file.
    When used interactively, ‘setenv-file’ prompts for a file, defaulting
 to the directory ‘setenv-file-dir’.
 
-
-File: setenv-file.info,  Node: How To,  Next: File Format,  Prev: setenv-file,  Up: Top
+* Menu:
 
-2 How To
+* How To::
+* File Format::
+
+
+File: setenv-file.info,  Node: How To,  Next: File Format,  Prev: Top,  Up: Top
+
+1 How To
 ********
 
 Create a file with environment variable definitions.  For example:
@@ -52,7 +45,7 @@ getenv’.
 
 File: setenv-file.info,  Node: File Format,  Prev: How To,  Up: Top
 
-3 File Format
+2 File Format
 *************
 
 Each line in the file should be in a ‘KEY=VALUE’ format, with one entry
@@ -67,9 +60,8 @@ so most shell-isms will not work.  However, the env file may:
 
 Tag Table:
 Node: Top83
-Node: setenv-file231
-Node: How To735
-Node: File Format1256
+Node: How To602
+Node: File Format1115
 
 End Tag Table
 

@@ -1,4 +1,5 @@
 (source melpa)
+(source org)
 
 (package-file "setenv-file.el")
 
@@ -10,5 +11,6 @@
  (depends-on "cask")
  (depends-on "ert-runner")
  (depends-on "markdown-mode")
+ (depends-on "org-plus-contrib")
  (depends-on "ox-gfm")
  (depends-on "projectile"))
