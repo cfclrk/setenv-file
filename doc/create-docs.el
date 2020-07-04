@@ -92,12 +92,12 @@ setenv-file.el."
   (with-temp-buffer
     (insert-file-contents (proj-file "setenv-file.el"))
     (let ((beg (search-forward ";;; Commentary:\n"))
-         (end (- (search-forward ";;; Code:") 10)))
-     (delete-region beg end)
-     (goto-char beg)
-     (insert "\n")
-     (insert-buffer-substring "*Org MD Export*")
-     (write-file (proj-file "setenv-file.el")))))
+          (end (- (search-forward ";;; Code:") 10)))
+      (delete-region beg end)
+      (goto-char beg)
+      (insert "\n")
+      (insert-buffer-substring "*Org MD Export*")
+      (write-file (proj-file "setenv-file.el")))))
 
 (defun proj-file (rel-path)
   "Return the absolute path to REL-PATH.
