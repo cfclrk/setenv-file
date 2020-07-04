@@ -60,7 +60,7 @@ multibyte env vars."
     (should (equal '("B=b" "A=a") process-environment))))
 
 (ert-deftest unset/simple ()
-  "Test running `setenv-file--unset' to unset a simple env var."
+  "Test running `setenv-file--unset' to unset simple env vars."
   (with-process-environment '("FOO=foo" "BAR=bar" "BAZ=baz")
     (setenv-file--unset '("FOO" "BAR"))
     (should (equal nil (getenv "FOO")))

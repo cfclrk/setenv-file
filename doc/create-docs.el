@@ -3,7 +3,7 @@
 ;;; Commentary:
 
 ;; Provides functions to generate a README.md, package texinfo documentation,
-;; and package Commentary from the setenv-file.org file.
+;; and package Commentary from the doc.org file.
 
 ;;; Code:
 
@@ -24,11 +24,11 @@
 
 (defun create-texinfo ()
   "Create the package texinfo docs.
-This exports sections tagged :info: in setenv-file.org to
+This exports sections tagged :info: in doc.org to
 texinfo. This creates two new files: a .texi file and a .info
 file."
   (with-temp-buffer
-    (insert-file-contents (proj-file "doc/setenv-file.org"))
+    (insert-file-contents (proj-file "doc/doc.org"))
     (let ((org-export-select-tags '("info"))
           (org-export-with-tags nil))
       (ox-extras-activate '(ignore-headlines))
@@ -37,11 +37,11 @@ file."
 
 (defun create-readme ()
   "Create the README.md.
-This exports sections tagged :readme: in setenv-file.org to a
+This exports sections tagged :readme: in doc.org to a
 README.md."
   ;; Run an org export to github-flavored-markdown
   (with-temp-buffer
-    (insert-file-contents (proj-file "doc/setenv-file.org"))
+    (insert-file-contents (proj-file "doc/doc.org"))
     (let ((org-export-select-tags '("readme"))
           (org-export-with-tags nil))
       (org-export-to-file 'gfm (proj-file "README.md"))))
@@ -56,12 +56,12 @@ README.md."
 
 (defun create-commentary ()
   "Create the Commentary section in setenv-file.el.
-This exports sections tagged :commentary: in setenv-file.org to
+This exports sections tagged :commentary: in doc.org to
 markdown, then puts the markdown in the Commentary section of
 setenv-file.el."
   ;; Run an org export to markdown
   (with-temp-buffer
-    (insert-file-contents (proj-file "doc/setenv-file.org"))
+    (insert-file-contents (proj-file "doc/doc.org"))
     (let ((org-export-select-tags '("commentary"))
           (org-export-with-tags nil)
           (org-export-show-temporary-export-buffer nil))

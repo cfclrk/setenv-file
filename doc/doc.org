@@ -45,11 +45,11 @@ shell-isms will not work. However, the env file may:
 
   1. =make install=: Install dependencies
   2. =make test=: Run unit tests
-  3. =make docs=: Runs an org export on =doc/setenv-file.org= to create:
+  3. =make doc=: Runs an org export on =doc/doc.org= which creates:
 
     * =README.md=
-    * package commentary in =setenv-file.el=
-    * package texinfo in =doc/=
+    * Package commentary in =setenv-file.el=
+    * Package texinfo (=.texi= and =.info=) in =doc/=
 
 * See Also                                                           :readme:
 
@@ -59,6 +59,9 @@ shell-isms will not work. However, the env file may:
 
 * Notes                                                            :noexport:
 
+  - Test to ensure multibyte strings are normalized
+  - Test value surrounded quotes
+  - Test value with special chars like quotes and commas
   - Check with melpazoid (https://github.com/riscy/melpazoid)
-  - Create GitHub Action to run tests
+  - Set up a [[https://github.com/marketplace/actions/emacs-lisp-check][GitHub Action]]
   - Add package-lint to tests

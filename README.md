@@ -45,10 +45,10 @@ shell-isms will not work. However, the env file may:
 
 1.  `make install`: Install dependencies
 2.  `make test`: Run unit tests
-3.  `make docs`: Runs an org export on `doc/setenv-file.org` to create:
+3.  `make doc`: Runs an org export on `doc/doc.org` which creates:
     -   `README.md`
-    -   package commentary in `setenv-file.el`
-    -   package texinfo in `doc/`
+    -   Package commentary in `setenv-file.el`
+    -   Package texinfo (`.texi` and `.info`) in `doc/`
 
 
 # See Also

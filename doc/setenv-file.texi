@@ -1,6 +1,6 @@
 \input texinfo    @c -*- texinfo -*-
 @c %**start of header
-@setfilename /Users/chris.clark/Projects/setenv-file/doc/setenv-file.info
+@setfilename /Users/chris.clark/Projects/elisp/setenv-file/doc/setenv-file.info
 @settitle setenv-file
 @documentencoding UTF-8
 @documentlanguage en

@@ -6,6 +6,6 @@ install:
 test:
 	cask exec ert-runner
 
-.PHONY: docs
-docs:
+.PHONY: doc
+doc:
 	cask exec emacs -batch -l doc/create-docs.el -f create-docs
