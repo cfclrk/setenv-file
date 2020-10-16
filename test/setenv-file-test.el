@@ -6,6 +6,17 @@
 
 ;;; Code:
 
+(ert-deftest setenv-file/prefix-simple ()
+  "Test running `setenv-file' with a prefix arg to unset simple
+env vars."
+  (with-process-environment '("FOO=foo" "BAR=bar")
+    (let ((test-file (proj-file "test/examples/simple"))
+          (current-prefix-arg 4))
+      (setenv-file test-file)
+      (should (equal nil (getenv "FOO")))
+      (should (equal nil (getenv "BAR")))
+      (should (equal '() process-environment)))))
+
 (ert-deftest setenv-file/variables ()
   "Test running `setenv-file' to set env vars with variables."
   (with-process-environment '()
@@ -25,17 +36,6 @@
       (should (equal "µ" (getenv "¥")))
       (should (equal '("\302\245=\302\265" "\320\244=\320\224")
                      process-environment)))))
-
-(ert-deftest setenv-file/prefix-simple ()
-  "Test running `setenv-file' with a prefix arg to unset simple
-env vars."
-  (with-process-environment '("FOO=foo" "BAR=bar")
-    (let ((test-file (proj-file "test/examples/simple"))
-          (current-prefix-arg 4))
-      (setenv-file test-file)
-      (should (equal nil (getenv "FOO")))
-      (should (equal nil (getenv "BAR")))
-      (should (equal '() process-environment)))))
 
 (ert-deftest setenv-file/prefix-multibyte ()
   "Test running `setenv-file' with a prefix arg to unset

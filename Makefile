@@ -1,5 +1,5 @@
 .PHONY: install
-install:
+dep:
 	cask install
 
 .PHONY: test

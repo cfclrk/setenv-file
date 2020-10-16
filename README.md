@@ -12,7 +12,15 @@ directory `setenv-file-dir`.
 
 # How To
 
-Create a file with environment variable definitions. For example:
+Load `setenv-file.el` in Emacs, and optionally set a `setenv-file-dir`:
+
+```emacs-lisp
+(load "/path/to/setenv-file.el")
+(setq setenv-file-dir (expand-file-name "~/.env/"))
+```
+
+Create a file in `setenv-file-dir` with environment variable definitions. For
+example:
 
 ```sh
 FOO=~/foo
@@ -20,8 +28,9 @@ BAR=$FOO/bar
 ОФИС=ДОМ
 ```
 
-Set those environment variables in Emacs using `M-x setenv-file`, and navigate
-to the file. View your new environment variables with `M-x getenv`.
+And now you can set those environment variables in Emacs using `M-x
+setenv-file`, and navigate to the file. View your new environment variables with
+`M-x getenv`.
 
 To customize the default directory where you keep your env files:
 
@@ -43,11 +52,11 @@ shell-isms will not work. However, the env file may:
 
 # Development
 
-1.  `make install`: Install dependencies
+1.  `make dep`: Install dependencies
 2.  `make test`: Run unit tests
 3.  `make doc`: Runs an org export on `doc/doc.org` which creates:
     -   `README.md`
-    -   Package commentary in `setenv-file.el`
+    -   The `;;; Commentary` section in `setenv-file.el`
     -   Package texinfo (`.texi` and `.info`) in `doc/`
 
 
