@@ -74,8 +74,7 @@
 (require 'f)
 (require 's)
 
-;; Customization
-;; ----------------------------------------------------------------------------
+;;; Options
 
 (defgroup setenv-file nil
   "Source environment variable files in Emacs."
@@ -88,8 +87,8 @@
   :group 'setenv-file
   :type 'file)
 
-;; Public
-;; ----------------------------------------------------------------------------
+;;; Public
+;;  ---------------------------------------------------------------------------
 
 (defun setenv-file (f)
   "Set or unset environment variables from file F.
@@ -110,8 +109,8 @@ variables defined in file F."
         (setenv-file--unset names)
       (setenv-file--export pairs))))
 
-;; Private
-;; ----------------------------------------------------------------------------
+;;; Private
+;;  ---------------------------------------------------------------------------
 
 (defun setenv-file--export (pairs)
   "Add PAIRS to `process-environment'.
