@@ -34,12 +34,6 @@ And now you can set those environment variables in Emacs using =M-x
 setenv-file=, and navigate to the file. View your new environment variables with
 =M-x getenv=.
 
-To customize the default directory where you keep your env files:
-
-#+begin_src emacs-lisp
-  (setq setenv-file-dir (expand-file-name "~/.env/"))
-#+end_src
-
 * File Format                                        :readme:commentary:info:
 
 Each line in the file should be in a =KEY=VALUE= format, with one entry per

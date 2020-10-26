@@ -53,10 +53,6 @@
 ;; setenv-file`, and navigate to the file. View your new environment variables
 ;; with `M-x getenv`.
 ;;
-;; To customize the default directory where you keep your env files:
-;;
-;;     (setq setenv-file-dir (expand-file-name "~/.env/"))
-;;
 ;;
 ;; # File Format
 ;;
@@ -88,7 +84,6 @@
   :type 'file)
 
 ;;; Public
-;;  ---------------------------------------------------------------------------
 
 (defun setenv-file (f)
   "Set or unset environment variables from file F.
@@ -103,20 +98,25 @@ Prefixed with one \\[universal-argument], unset the environment
 variables defined in file F."
   (interactive (list (read-file-name "ENV file: " setenv-file-dir)))
   (let* ((lines (s-lines (s-trim (f-read-text f))))
-         (pairs (--map (s-split "=" it) lines))
-         (names (-map 'car pairs)))
+         (pairs (--map (s-split "=" it) lines)))
     (if current-prefix-arg
-        (setenv-file--unset names)
-      (setenv-file--export pairs))))
+        (setenv-file-unset-pairs pairs)
+      (setenv-file-export-pairs pairs))))
 
-;;; Private
-;;  ---------------------------------------------------------------------------
-
-(defun setenv-file--export (pairs)
+(defun setenv-file-export-pairs (pairs)
   "Add PAIRS to `process-environment'.
 PAIRS is a list of pairs, where each pair is an environment
 variable name and value."
   (-each pairs #'setenv-file--export-pair))
+
+(defun setenv-file-unset-pairs (pairs)
+  "Remove PAIRS from `process-environment'.
+PAIRS is a list of pairs, where each pair is an environment
+variable name and value. The value is discarded; the environment
+variable will be removed regardless of its value."
+  (setenv-file--unset-names (-map 'car pairs)))
+
+;;; Private
 
 (defun setenv-file--export-pair (pair)
   "Set an environment variable PAIR.
@@ -131,7 +131,7 @@ path and expanded."
         (setenv name (expand-file-name val) t)
       (setenv name val t))))
 
-(defun setenv-file--unset (names)
+(defun setenv-file--unset-names (names)
   "Remove NAMES from `process-environment'.
 NAMES is a list of environment variable names which may or may
 not be currently set. This function removes each given name from

@@ -44,10 +44,6 @@ definitions.  For example:
 setenv-file’, and navigate to the file.  View your new environment
 variables with ‘M-x getenv’.
 
-   To customize the default directory where you keep your env files:
-
-     (setq setenv-file-dir (expand-file-name "~/.env/"))
-
 
 File: setenv-file.info,  Node: File Format,  Prev: How To,  Up: Top
 
@@ -67,7 +63,7 @@ so most shell-isms will not work.  However, the env file may:
 Tag Table:
 Node: Top83
 Node: How To602
-Node: File Format1336
+Node: File Format1208
 
 End Tag Table
 

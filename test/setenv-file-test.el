@@ -6,7 +6,16 @@
 
 ;;; Code:
 
-(ert-deftest setenv-file/prefix-simple ()
+(ert-deftest setenv-file/simple ()
+  "Test running `setenv-file' to set env vars."
+  (with-process-environment '()
+    (let ((test-file (proj-file "test/examples/variables")))
+      (setenv-file test-file)
+      (should (equal "foo" (getenv "FOO")))
+      (should (equal "foo-bar" (getenv "BAR")))
+      (should (equal (expand-file-name "~/cats") (getenv "BAZ"))))))
+
+(ert-deftest setenv-file/with-prefix-arg ()
   "Test running `setenv-file' with a prefix arg to unset simple
 env vars."
   (with-process-environment '("FOO=foo" "BAR=bar")
@@ -16,15 +25,6 @@ env vars."
       (should (equal nil (getenv "FOO")))
       (should (equal nil (getenv "BAR")))
       (should (equal '() process-environment)))))
-
-(ert-deftest setenv-file/variables ()
-  "Test running `setenv-file' to set env vars with variables."
-  (with-process-environment '()
-    (let ((test-file (proj-file "test/examples/variables")))
-      (setenv-file test-file)
-      (should (equal "foo" (getenv "FOO")))
-      (should (equal "foo-bar" (getenv "BAR")))
-      (should (equal (expand-file-name "~/cats") (getenv "BAZ"))))))
 
 (ert-deftest setenv-file/multibyte ()
   "Test running `setenv-file' to set env vars with multibyte characters."
@@ -37,7 +37,7 @@ env vars."
       (should (equal '("\302\245=\302\265" "\320\244=\320\224")
                      process-environment)))))
 
-(ert-deftest setenv-file/prefix-multibyte ()
+(ert-deftest setenv-file/multibyte-with-prefix-arg ()
   "Test running `setenv-file' with a prefix arg to unset
 multibyte env vars."
   (with-process-environment
@@ -50,41 +50,49 @@ multibyte env vars."
       (should (equal nil (getenv "Ф")))
       (should (equal nil (getenv "¥"))))))
 
-(ert-deftest export/simple ()
-  "Test running `setenv-file--export' to set simple env vars."
+(ert-deftest setenv-file-export-pairs ()
+  "Test running `setenv-file-export-pairs' to set env vars."
   (with-process-environment '()
-    (setenv-file--export '(("A" "a")
-                           ("B" "b")))
+    (setenv-file-export-pairs '(("A" "a")
+                                ("B" "b")))
     (should (equal "a" (getenv "A")))
     (should (equal "b" (getenv "B")))
     (should (equal '("B=b" "A=a") process-environment))))
 
-(ert-deftest unset/simple ()
-  "Test running `setenv-file--unset' to unset simple env vars."
+(ert-deftest setenv-file-unset-pairs ()
+  "Test running `setenv-file-unset-pairs' to unset env vars."
   (with-process-environment '("FOO=foo" "BAR=bar" "BAZ=baz")
-    (setenv-file--unset '("FOO" "BAR"))
+    (setenv-file-unset-pairs '(("FOO" "foo") ("BAR" "barrr")))
+    (should (equal nil (getenv "FOO")))
+    (should (equal nil (getenv "BAR")))
+    (should (equal "baz" (getenv "BAZ")))))
+
+(ert-deftest setenv-file--unset-names/simple ()
+  "Test running `setenv-file-unset-names' to unset env vars."
+  (with-process-environment '("FOO=foo" "BAR=bar" "BAZ=baz")
+    (setenv-file--unset-names '("FOO" "BAR"))
     (should (equal nil (getenv "FOO")))
     (should (equal nil (getenv "BAR")))
     (should (equal "baz" (getenv "BAZ")))
     (should (equal '("BAZ=baz") process-environment))))
 
-(ert-deftest unset/non-existent-name ()
-  "Test running `setenv-file--unset' to unset an env var that doesn't exist.
+(ert-deftest setenv-file--unset-names/non-existent-name ()
+  "Test running `setenv-file--unset-names' to unset non-existent env var.
 This shouldn't cause a problem. The environment should remain
 unchanged."
   (with-process-environment '("FOO=foo")
-    (setenv-file--unset '(("BAR" "bar")))
+    (setenv-file--unset-names '(("BAR" "bar")))
     (should (equal nil (getenv "BAR")))
     (should (equal '("FOO=foo") process-environment))))
 
-(ert-deftest export-pair ()
+(ert-deftest setenv-file--export-pair ()
   "Test running `setenv-file--export-pair' to set a single
 environment variable."
   (with-process-environment '()
     (setenv-file--export-pair '("FOO" "foo"))
     (should (equal "foo" (getenv "FOO")))))
 
-(ert-deftest unset-name/simple ()
+(ert-deftest setenv-file--unset-name/simple ()
   "Test running `setenv-file--unset-name' to unset a single,
 simple environment variable."
   (with-process-environment '("CATS=cats")
@@ -92,7 +100,7 @@ simple environment variable."
     (setenv-file--unset-name "CATS")
     (should (equal nil (getenv "CATS")))))
 
-(ert-deftest unset-name/multibyte ()
+(ert-deftest setenv-file--unset-name/multibyte ()
   "Test running `setenv-file--unset-name' to unset a single,
 multibyte environment variable."
   (with-process-environment '("\320\224=\320\244")
