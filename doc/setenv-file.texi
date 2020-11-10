@@ -27,12 +27,13 @@ directory @samp{setenv-file-dir}.
 @end ifnottex
 
 @menu
-* How To::
+* Usage::
+* Usage in org-mode::
 * File Format::
 @end menu
 
-@node How To
-@chapter How To
+@node Usage
+@chapter Usage
 
 Load @samp{setenv-file.el} in Emacs, and optionally set a @samp{setenv-file-dir}:
 
@@ -53,6 +54,25 @@ BAR=$FOO/bar
 And now you can set those environment variables in Emacs using @samp{M-x
 setenv-file}, and navigate to the file. View your new environment variables with
 @samp{M-x getenv}.
+
+@node Usage in org-mode
+@chapter Usage in org-mode
+
+Set Emacs environment variables from an org mode document by evaluating the
+@samp{src} block below (with @samp{C-c C-c}):
+
+@example
+#+NAME: env
+| Var  | Value    |
+|------+----------|
+| FOO  | ~/foo    |
+| BAR  | $FOO/bar |
+| ОФИС | ДОМ      |
+
+#+begin_src emacs-lisp :var env=env
+  (setenv-file-export-pairs env)
+#+end_src
+@end example
 
 @node File Format
 @chapter File Format

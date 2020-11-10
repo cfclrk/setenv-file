@@ -10,7 +10,7 @@ When used interactively, `setenv-file` prompts for a file, defaulting to the
 directory `setenv-file-dir`.
 
 
-# How To
+# Usage
 
 Load `setenv-file.el` in Emacs, and optionally set a `setenv-file-dir`:
 
@@ -31,6 +31,23 @@ BAR=$FOO/bar
 And now you can set those environment variables in Emacs using `M-x
 setenv-file`, and navigate to the file. View your new environment variables with
 `M-x getenv`.
+
+
+# Usage in org-mode
+
+Set Emacs environment variables from an org mode document by evaluating the
+`src` block below (with `C-c C-c`):
+
+    #+NAME: env
+    | Var  | Value    |
+    |------+----------|
+    | FOO  | ~/foo    |
+    | BAR  | $FOO/bar |
+    | ОФИС | ДОМ      |
+    
+    #+begin_src emacs-lisp :var env=env
+      (setenv-file-export-pairs env)
+    #+end_src
 
 
 # File Format

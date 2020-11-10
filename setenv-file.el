@@ -35,7 +35,7 @@
 ;; directory `setenv-file-dir`.
 ;;
 ;;
-;; # How To
+;; # Usage
 ;;
 ;; Load `setenv-file.el` in Emacs, and optionally set a `setenv-file-dir`:
 ;;
@@ -143,9 +143,9 @@ not be currently set. This function removes each given name from
 Unset environment variable NAME by removing it from
 `process-environment' if it is there.
 
-Note: calling `setenv' with a prefix argument sets an environment
-variable's value to nil, but it's name is still present. This
-function completely removes the environment variable."
+Note: calling `setenv' with a prefix argument sets the variable's
+value to nil, but the variable is still present. This function
+completely removes the variable from `process-environment'."
   (let* ((name (if (multibyte-string-p name)
                    (encode-coding-string name locale-coding-system t)
                  name))

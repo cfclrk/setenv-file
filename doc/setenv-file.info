@@ -2,7 +2,7 @@ This is setenv-file.info, produced by makeinfo version 6.7 from
 setenv-file.texi.
 
 
-File: setenv-file.info,  Node: Top,  Next: How To,  Up: (dir)
+File: setenv-file.info,  Node: Top,  Next: Usage,  Up: (dir)
 
 setenv-file
 ***********
@@ -19,14 +19,15 @@ to the directory ‘setenv-file-dir’.
 
 * Menu:
 
-* How To::
+* Usage::
+* Usage in org-mode::
 * File Format::
 
 
-File: setenv-file.info,  Node: How To,  Next: File Format,  Prev: Top,  Up: Top
+File: setenv-file.info,  Node: Usage,  Next: Usage in org-mode,  Prev: Top,  Up: Top
 
-1 How To
-********
+1 Usage
+*******
 
 Load ‘setenv-file.el’ in Emacs, and optionally set a ‘setenv-file-dir’:
 
@@ -45,9 +46,29 @@ setenv-file’, and navigate to the file.  View your new environment
 variables with ‘M-x getenv’.
 
 
-File: setenv-file.info,  Node: File Format,  Prev: How To,  Up: Top
+File: setenv-file.info,  Node: Usage in org-mode,  Next: File Format,  Prev: Usage,  Up: Top
 
-2 File Format
+2 Usage in org-mode
+*******************
+
+Set Emacs environment variables from an org mode document by evaluating
+the ‘src’ block below (with ‘C-c C-c’):
+
+     #+NAME: env
+     | Var  | Value    |
+     |------+----------|
+     | FOO  | ~/foo    |
+     | BAR  | $FOO/bar |
+     | ОФИС | ДОМ      |
+
+     #+begin_src emacs-lisp :var env=env
+       (setenv-file-export-pairs env)
+     #+end_src
+
+
+File: setenv-file.info,  Node: File Format,  Prev: Usage in org-mode,  Up: Top
+
+3 File Format
 *************
 
 Each line in the file should be in a ‘KEY=VALUE’ format, with one entry
@@ -62,8 +83,9 @@ so most shell-isms will not work.  However, the env file may:
 
 Tag Table:
 Node: Top83
-Node: How To602
-Node: File Format1208
+Node: Usage622
+Node: Usage in org-mode1231
+Node: File Format1734
 
 End Tag Table
 
