@@ -90,7 +90,10 @@ unchanged."
 environment variable."
   (with-process-environment '()
     (setenv-file--export-pair '("FOO" "foo"))
-    (should (equal "foo" (getenv "FOO")))))
+    (should (equal "foo" (getenv "FOO")))
+
+    (setenv-file--export-pair '("FOO" 1))
+    (should (equal "1" (getenv "FOO")))))
 
 (ert-deftest setenv-file--unset-name/simple ()
   "Test running `setenv-file--unset-name' to unset a single,

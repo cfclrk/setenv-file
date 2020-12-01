@@ -125,11 +125,14 @@ variable name and the second element is the value.
 
 If the second element begins with a ~, it is treated as a file
 path and expanded."
-  (let ((name (car pair))
-        (val (car (cdr pair))))
-    (if (string-prefix-p "~" val)
-        (setenv name (expand-file-name val) t)
-      (setenv name val t))))
+  (let* ((name (car pair))
+         (val (car (cdr pair)))
+         (string_val (if (numberp val)
+                         (number-to-string val)
+                       val)))
+    (if (string-prefix-p "~" string_val)
+        (setenv name (expand-file-name string_val) t)
+      (setenv name string_val t))))
 
 (defun setenv-file--unset-names (names)
   "Remove NAMES from `process-environment'.
