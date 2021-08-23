@@ -51,8 +51,8 @@ File: setenv-file.info,  Node: Usage in org-mode,  Next: File Format,  Prev: Usa
 2 Usage in org-mode
 *******************
 
-Set Emacs environment variables from an org mode document by evaluating
-the ‘src’ block below (with ‘C-c C-c’):
+The example below shows a convenient way to declare and set environment
+variables in an ‘org’ document:
 
      #+NAME: env
      | Var  | Value    |
@@ -85,7 +85,7 @@ Tag Table:
 Node: Top83
 Node: Usage622
 Node: Usage in org-mode1231
-Node: File Format1734
+Node: File Format1722
 
 End Tag Table
 

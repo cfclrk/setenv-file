@@ -35,8 +35,8 @@ setenv-file`, and navigate to the file. View your new environment variables with
 
 # Usage in org-mode
 
-Set Emacs environment variables from an org mode document by evaluating the
-`src` block below (with `C-c C-c`):
+The example below shows a convenient way to declare and set environment
+variables in an `org` document:
 
     #+NAME: env
     | Var  | Value    |

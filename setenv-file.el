@@ -85,8 +85,8 @@
 
 ;;; Public
 
-(defun setenv-file (f)
-  "Set or unset environment variables from file F.
+(defun setenv-file (file-path)
+  "Set or unset environment variables from file FILE-PATH.
 When used interactively, `setenv-file' prompts for the file
 to load, defaulting to the directory `source-env-dir'.
 
@@ -97,7 +97,7 @@ value. However, other shell-isms will not work.
 Prefixed with one \\[universal-argument], unset the environment
 variables defined in file F."
   (interactive (list (read-file-name "ENV file: " setenv-file-dir)))
-  (let* ((lines (s-lines (s-trim (f-read-text f))))
+  (let* ((lines (s-lines (s-trim (f-read-text file-path))))
          (pairs (--map (s-split "=" it) lines)))
     (if current-prefix-arg
         (setenv-file-unset-pairs pairs)

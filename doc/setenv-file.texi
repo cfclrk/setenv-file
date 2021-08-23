@@ -58,8 +58,8 @@ setenv-file}, and navigate to the file. View your new environment variables with
 @node Usage in org-mode
 @chapter Usage in org-mode
 
-Set Emacs environment variables from an org mode document by evaluating the
-@samp{src} block below (with @samp{C-c C-c}):
+The example below shows a convenient way to declare and set environment
+variables in an @samp{org} document:
 
 @example
 #+NAME: env
