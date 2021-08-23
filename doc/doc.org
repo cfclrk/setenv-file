@@ -14,6 +14,9 @@ directory =setenv-file-dir=.
 
 * Usage                                              :readme:commentary:info:
 
+TODO: This isn't the way to do it. Use the =sh= shell to evaluate variables, and
+diff the result against the current environment.
+
 Load =setenv-file.el= in Emacs, and optionally set a =setenv-file-dir=:
 
 #+begin_src emacs-lisp
@@ -28,6 +31,7 @@ example:
   FOO=~/foo
   BAR=$FOO/bar
   ОФИС=ДОМ
+  BAZ=nosubst:FOO$BAR
 #+end_src
 
 And now you can set those environment variables in Emacs using =M-x
@@ -41,11 +45,12 @@ variables in an =org= document:
 
 #+begin_example
 #+NAME: env
-| Var  | Value    |
-|------+----------|
-| FOO  | ~/foo    |
-| BAR  | $FOO/bar |
-| ОФИС | ДОМ      |
+| Var  | Value           |
+|------+-----------------|
+| FOO  | ~/foo           |
+| BAR  | $FOO/bar        |
+| ОФИС | ДОМ             |
+| BAZ  | nosubst:FOO$BAR |
 
 #+begin_src emacs-lisp :var env=env
   (setenv-file-export-pairs env)

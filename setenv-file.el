@@ -124,15 +124,27 @@ PAIR is a list of size 2, where first element is an environment
 variable name and the second element is the value.
 
 If the second element begins with a ~, it is treated as a file
-path and expanded."
+path and expanded.
+
+If the second element begins with nosubst:, it is treated as a
+literal string, and no variable interpolation is performed."
   (let* ((name (car pair))
          (val (car (cdr pair)))
+
+         ;; if the value of the pair is an number, convert it to a string
          (string_val (if (numberp val)
                          (number-to-string val)
-                       val)))
-    (if (string-prefix-p "~" string_val)
-        (setenv name (expand-file-name string_val) t)
-      (setenv name string_val t))))
+                       val))
+
+         ;; if the value starts with ~, expand it like a path
+         (full_val (if (string-prefix-p "~" string_val)
+                       (expand-file-name string_val)
+                     string_val)))
+
+    ;; if the value starts with "nosubst:", do not do variable interpolation
+    (if (string-prefix-p "nosubst:" full_val)
+        (setenv name (s-chop-prefix "nosubst:" full_val))
+      (setenv name full_val t))))
 
 (defun setenv-file--unset-names (names)
   "Remove NAMES from `process-environment'.

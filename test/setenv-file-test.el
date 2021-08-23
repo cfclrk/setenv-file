@@ -54,10 +54,10 @@ multibyte env vars."
   "Test running `setenv-file-export-pairs' to set env vars."
   (with-process-environment '()
     (setenv-file-export-pairs '(("A" "a")
-                                ("B" "b")))
+                                ("B" "nosubst:R$%!$KP$")))
     (should (equal "a" (getenv "A")))
-    (should (equal "b" (getenv "B")))
-    (should (equal '("B=b" "A=a") process-environment))))
+    (should (equal "R$%!$KP$" (getenv "B")))
+    (should (equal '("B=R$%!$KP$" "A=a") process-environment))))
 
 (ert-deftest setenv-file-unset-pairs ()
   "Test running `setenv-file-unset-pairs' to unset env vars."
@@ -86,8 +86,7 @@ unchanged."
     (should (equal '("FOO=foo") process-environment))))
 
 (ert-deftest setenv-file--export-pair ()
-  "Test running `setenv-file--export-pair' to set a single
-environment variable."
+  "Test running `setenv-file--export-pair' to set a single environment variable."
   (with-process-environment '()
     (setenv-file--export-pair '("FOO" "foo"))
     (should (equal "foo" (getenv "FOO")))
