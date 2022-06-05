@@ -1,6 +1,6 @@
 \input texinfo    @c -*- texinfo -*-
 @c %**start of header
-@setfilename /Users/chris.clark/Projects/elisp/setenv-file/doc/setenv-file.info
+@setfilename /Users/cclark/emacs/cfclrk/straight/repos/setenv-file/doc/setenv-file.info
 @settitle setenv-file
 @documentencoding UTF-8
 @documentlanguage en
@@ -16,7 +16,7 @@
 @node Top
 @top setenv-file
 
-Set or unset environment variables from a file.
+Set or unset environment variables from an "env" file.
 
 This package provides an interactive function @samp{setenv-file} to set environment
 variables defined in a file. With one @samp{C-u} prefix argument, @samp{setenv-file}
@@ -35,25 +35,24 @@ directory @samp{setenv-file-dir}.
 @node Usage
 @chapter Usage
 
-Load @samp{setenv-file.el} in Emacs, and optionally set a @samp{setenv-file-dir}:
-
-@lisp
-(load "/path/to/setenv-file.el")
-(setq setenv-file-dir (expand-file-name "~/.env/"))
-@end lisp
-
-Create a file in @samp{setenv-file-dir} with environment variable definitions. For
-example:
+Create a file with environment variable definitions. For example:
 
 @example
 FOO=~/foo
 BAR=$FOO/bar
 ОФИС=ДОМ
+BAZ=nosubst:FOO$BAR
 @end example
 
-And now you can set those environment variables in Emacs using @samp{M-x
-setenv-file}, and navigate to the file. View your new environment variables with
-@samp{M-x getenv}.
+Now, set those environment variables in Emacs using @samp{M-x setenv-file}, and
+navigate to the file. View your new environment variables with @samp{M-x getenv}.
+
+Optionally, set a default directory where you put such env files using
+@samp{setenv-file-dir}:
+
+@lisp
+(setq setenv-file-dir (expand-file-name "~/.env/"))
+@end lisp
 
 @node Usage in org-mode
 @chapter Usage in org-mode
@@ -63,11 +62,12 @@ variables in an @samp{org} document:
 
 @example
 #+NAME: env
-| Var  | Value    |
-|------+----------|
-| FOO  | ~/foo    |
-| BAR  | $FOO/bar |
-| ОФИС | ДОМ      |
+| Var  | Value           |
+|------+-----------------|
+| FOO  | ~/foo           |
+| BAR  | $FOO/bar        |
+| ОФИС | ДОМ             |
+| BAZ  | nosubst:FOO$BAR |
 
 #+begin_src emacs-lisp :var env=env
   (setenv-file-export-pairs env)

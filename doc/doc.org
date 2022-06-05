@@ -3,65 +3,77 @@
 
 * setenv-file                                 :readme:commentary:info:ignore:
 
-Set or unset environment variables from a file.
+  Set or unset environment variables from an "env" file.
 
-This package provides an interactive function =setenv-file= to set environment
-variables defined in a file. With one =C-u= prefix argument, =setenv-file=
-unsets the environment variables defined in the file.
+  This package provides an interactive function =setenv-file= to set environment
+  variables defined in a file. With one =C-u= prefix argument, =setenv-file=
+  unsets the environment variables defined in the file.
 
-When used interactively, =setenv-file= prompts for a file, defaulting to the
-directory =setenv-file-dir=.
+  When used interactively, =setenv-file= prompts for a file, defaulting to the
+  directory =setenv-file-dir=.
+
+* Installation                                                       :readme:
+
+  Copy =setenv-file.el= to your machine, and load it:
+
+  #+begin_src emacs-lisp
+    (load "/path/to/setenv-file.el")
+  #+end_src
+
+  Or, using straight:
+
+  #+begin_src emacs-lisp
+    (straight-use-package
+     '(setenv-file :type git
+                   :host github
+                   :repo "cfclrk/setenv-file"))
+  #+end_src
 
 * Usage                                              :readme:commentary:info:
 
-TODO: This isn't the way to do it. Use the =sh= shell to evaluate variables, and
-diff the result against the current environment.
+  Create a file with environment variable definitions. For example:
 
-Load =setenv-file.el= in Emacs, and optionally set a =setenv-file-dir=:
+  #+begin_src sh
+    FOO=~/foo
+    BAR=$FOO/bar
+    ОФИС=ДОМ
+    BAZ=nosubst:FOO$BAR
+  #+end_src
 
-#+begin_src emacs-lisp
-  (load "/path/to/setenv-file.el")
-  (setq setenv-file-dir (expand-file-name "~/.env/"))
-#+end_src
+  Now, set those environment variables in Emacs using =M-x setenv-file=, and
+  navigate to the file. View your new environment variables with =M-x getenv=.
 
-Create a file in =setenv-file-dir= with environment variable definitions. For
-example:
+  Optionally, set a default directory where you put such env files using
+  =setenv-file-dir=:
 
-#+begin_src sh
-  FOO=~/foo
-  BAR=$FOO/bar
-  ОФИС=ДОМ
-  BAZ=nosubst:FOO$BAR
-#+end_src
-
-And now you can set those environment variables in Emacs using =M-x
-setenv-file=, and navigate to the file. View your new environment variables with
-=M-x getenv=.
+  #+begin_src emacs-lisp
+    (setq setenv-file-dir (expand-file-name "~/.env/"))
+  #+end_src
 
 * Usage in org-mode                                             :readme:info:
 
-The example below shows a convenient way to declare and set environment
-variables in an =org= document:
+  The example below shows a convenient way to declare and set environment
+  variables in an =org= document:
 
-#+begin_example
-#+NAME: env
-| Var  | Value           |
-|------+-----------------|
-| FOO  | ~/foo           |
-| BAR  | $FOO/bar        |
-| ОФИС | ДОМ             |
-| BAZ  | nosubst:FOO$BAR |
+  #+begin_example
+  #+NAME: env
+  | Var  | Value           |
+  |------+-----------------|
+  | FOO  | ~/foo           |
+  | BAR  | $FOO/bar        |
+  | ОФИС | ДОМ             |
+  | BAZ  | nosubst:FOO$BAR |
 
-#+begin_src emacs-lisp :var env=env
-  (setenv-file-export-pairs env)
-#+end_src
-#+end_example
+  #+begin_src emacs-lisp :var env=env
+    (setenv-file-export-pairs env)
+  #+end_src
+  #+end_example
 
 * File Format                                        :readme:commentary:info:
 
-Each line in the file should be in a =KEY=VALUE= format, with one entry per
-line. This package does not invoke a shell to interpret the file, so most
-shell-isms will not work. However, the env file may:
+  Each line in the file should be in a =KEY=VALUE= format, with one entry per
+  line. This package does not invoke a shell to interpret the file, so most
+  shell-isms will not work. However, the env file may:
 
   - Use existing environment variables
   - Define an environment variable and use it in successive lines
@@ -69,13 +81,13 @@ shell-isms will not work. However, the env file may:
 
 * Development                                                        :readme:
 
-1. =make dep=: Install dependencies
-2. =make test=: Run unit tests
-3. =make doc=: Runs an org export on =doc/doc.org= which creates:
+  1. =make dep=: Install dependencies
+  2. =make test=: Run unit tests
+  3. =make doc=: Runs an org export on =doc/doc.org= which creates:
 
-  * =README.md=
-  * The =;;; Commentary= section in =setenv-file.el=
-  * Package texinfo (=.texi= and =.info=) in =doc/=
+     * =README.md=
+     * The =;;; Commentary= section in =setenv-file.el=
+     * Package texinfo (=.texi= and =.info=) in =doc/=
 
 * See Also                                                           :readme:
 
@@ -84,6 +96,9 @@ shell-isms will not work. However, the env file may:
   - [[https://github.com/articuluxe/parsenv][parsenv]]
 
 * Notes                                                            :noexport:
+
+  TODO: This isn't the way to do it. Use the =sh= shell to evaluate variables,
+  and diff the result against the current environment.
 
   - Test to ensure multibyte strings are normalized
   - Test value surrounded quotes

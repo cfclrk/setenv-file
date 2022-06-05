@@ -15,6 +15,11 @@
 (require 'markdown-mode)
 (require 'whitespace)
 
+(defun proj-file (rel-path)
+  "Return the absolute path to REL-PATH.
+REL-PATH is a path relative to this project root."
+  (f-join (projectile-project-root) rel-path))
+
 (defun create-docs ()
   "Create the package README.md, texinfo, and commentary."
   (let ((make-backup-files nil))
@@ -98,11 +103,6 @@ setenv-file.el."
       (insert "\n")
       (insert-buffer-substring "*Org MD Export*")
       (write-file (proj-file "setenv-file.el")))))
-
-(defun proj-file (rel-path)
-  "Return the absolute path to REL-PATH.
-REL-PATH is a path relative to this project root."
-  (f-join (projectile-project-root) rel-path))
 
 (provide 'create-docs)
 ;;; create-docs.el ends here

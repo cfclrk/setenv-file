@@ -1,4 +1,4 @@
-This is setenv-file.info, produced by makeinfo version 6.7 from
+This is setenv-file.info, produced by makeinfo version 6.8 from
 setenv-file.texi.
 
 
@@ -7,7 +7,7 @@ File: setenv-file.info,  Node: Top,  Next: Usage,  Up: (dir)
 setenv-file
 ***********
 
-Set or unset environment variables from a file.
+Set or unset environment variables from an "env" file.
 
    This package provides an interactive function ‘setenv-file’ to set
 environment variables defined in a file.  With one ‘C-u’ prefix
@@ -29,21 +29,21 @@ File: setenv-file.info,  Node: Usage,  Next: Usage in org-mode,  Prev: Top,  Up:
 1 Usage
 *******
 
-Load ‘setenv-file.el’ in Emacs, and optionally set a ‘setenv-file-dir’:
-
-     (load "/path/to/setenv-file.el")
-     (setq setenv-file-dir (expand-file-name "~/.env/"))
-
-   Create a file in ‘setenv-file-dir’ with environment variable
-definitions.  For example:
+Create a file with environment variable definitions.  For example:
 
      FOO=~/foo
      BAR=$FOO/bar
      ОФИС=ДОМ
+     BAZ=nosubst:FOO$BAR
 
-   And now you can set those environment variables in Emacs using ‘M-x
+   Now, set those environment variables in Emacs using ‘M-x
 setenv-file’, and navigate to the file.  View your new environment
 variables with ‘M-x getenv’.
+
+   Optionally, set a default directory where you put such env files
+using ‘setenv-file-dir’:
+
+     (setq setenv-file-dir (expand-file-name "~/.env/"))
 
 
 File: setenv-file.info,  Node: Usage in org-mode,  Next: File Format,  Prev: Usage,  Up: Top
@@ -55,11 +55,12 @@ The example below shows a convenient way to declare and set environment
 variables in an ‘org’ document:
 
      #+NAME: env
-     | Var  | Value    |
-     |------+----------|
-     | FOO  | ~/foo    |
-     | BAR  | $FOO/bar |
-     | ОФИС | ДОМ      |
+     | Var  | Value           |
+     |------+-----------------|
+     | FOO  | ~/foo           |
+     | BAR  | $FOO/bar        |
+     | ОФИС | ДОМ             |
+     | BAZ  | nosubst:FOO$BAR |
 
      #+begin_src emacs-lisp :var env=env
        (setenv-file-export-pairs env)
@@ -83,9 +84,9 @@ so most shell-isms will not work.  However, the env file may:
 
 Tag Table:
 Node: Top83
-Node: Usage622
-Node: Usage in org-mode1231
-Node: File Format1722
+Node: Usage629
+Node: Usage in org-mode1203
+Node: File Format1761
 
 End Tag Table
 

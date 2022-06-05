@@ -1,31 +1,11 @@
 ;;; setenv-file.el --- Set or unset environment variables from a file  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2020 by Chris Clark
-
-;; Author: Chris Clark <cfclrk@gmail.com>
-;; URL: https://github.com/cfclrk/setenv-file.el
-;; Keywords: convenience, environment
-;; Package-Requires: ((emacs "24.1") (dash "2.17.0") (f "0.20.0") (s "1.12.0"))
+;; Package-Requires: ((dash "2.17.0") (f "0.20.0") (s "1.12.0"))
 ;; Package-Version: 0.0.1
-
-;; This file is NOT part of GNU Emacs.
-
-;; This program is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
-;; Set or unset environment variables from a file.
+;; Set or unset environment variables from an "env" file.
 ;;
 ;; This package provides an interactive function `setenv-file` to set
 ;; environment variables defined in a file. With one `C-u` prefix argument,
@@ -37,21 +17,20 @@
 ;;
 ;; # Usage
 ;;
-;; Load `setenv-file.el` in Emacs, and optionally set a `setenv-file-dir`:
-;;
-;;     (load "/path/to/setenv-file.el")
-;;     (setq setenv-file-dir (expand-file-name "~/.env/"))
-;;
-;; Create a file in `setenv-file-dir` with environment variable definitions. For
-;; example:
+;; Create a file with environment variable definitions. For example:
 ;;
 ;;     FOO=~/foo
 ;;     BAR=$FOO/bar
 ;;     ОФИС=ДОМ
+;;     BAZ=nosubst:FOO$BAR
 ;;
-;; And now you can set those environment variables in Emacs using `M-x
-;; setenv-file`, and navigate to the file. View your new environment variables
-;; with `M-x getenv`.
+;; Now, set those environment variables in Emacs using `M-x setenv-file`, and
+;; navigate to the file. View your new environment variables with `M-x getenv`.
+;;
+;; Optionally, set a default directory where you put such env files using
+;; `setenv-file-dir`:
+;;
+;;     (setq setenv-file-dir (expand-file-name "~/.env/"))
 ;;
 ;;
 ;; # File Format
