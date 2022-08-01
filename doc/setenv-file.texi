@@ -18,24 +18,40 @@
 
 Set or unset environment variables from an "env" file.
 
-This package provides an interactive function @samp{setenv-file} to set environment
-variables defined in a file. With one @samp{C-u} prefix argument, @samp{setenv-file}
-unsets the environment variables defined in the file.
+This package provides two interactive functions:
 
-When used interactively, @samp{setenv-file} prompts for a file, defaulting to the
-directory @samp{setenv-file-dir}.
+@enumerate
+@item
+@samp{setenv-file-set}: set all the env vars in an env file
+@item
+@samp{setenv-file-unset}: unset all the env vars in an env file
+@end enumerate
+
+When used interactively, each function prompts for a file. By default, the
+prompt begins at @samp{setenv-file-dir}.
 @end ifnottex
 
 @menu
 * Usage::
-* Usage in org-mode::
 * File Format::
+
+@detailmenu
+--- The Detailed Node Listing ---
+
+Usage
+
+* Interactive::
+* In elisp::
+* In org-mode::
+
+@end detailmenu
 @end menu
 
 @node Usage
 @chapter Usage
 
-Create a file with environment variable definitions. For example:
+Start by creating an env file in @samp{setenv-file-dir} (by default, @samp{~/.env/}).
+For example, create this file in @samp{~/.env/foo}:
 
 @example
 FOO=~/foo
@@ -44,18 +60,40 @@ BAR=$FOO/bar
 BAZ=nosubst:FOO$BAR
 @end example
 
-Now, set those environment variables in Emacs using @samp{M-x setenv-file}, and
-navigate to the file. View your new environment variables with @samp{M-x getenv}.
-
-Optionally, set a default directory where you put such env files using
-@samp{setenv-file-dir}:
+Note that you can customize @samp{setenv-file-dir} if you like, like this:
 
 @lisp
-(setq setenv-file-dir (expand-file-name "~/.env/"))
+(setq setenv-file-dir
+      (expand-file-name "~/another/path/"))
 @end lisp
 
-@node Usage in org-mode
-@chapter Usage in org-mode
+@menu
+* Interactive::
+* In elisp::
+* In org-mode::
+@end menu
+
+@node Interactive
+@section Interactive
+
+Now, set environment variables in Emacs using @samp{M-x setenv-file}, and navigate
+to an env file.
+
+View your new environment variables with @samp{M-x getenv}.
+
+Unset all of the variables defined in an env file.
+
+@node In elisp
+@section In elisp
+
+To set env variables defined in @samp{~/.env/foo}:
+
+@lisp
+(setenv-file "foo" setenv-file-dir)
+@end lisp
+
+@node In org-mode
+@section In org-mode
 
 The example below shows a convenient way to declare and set environment
 variables in an @samp{org} document:

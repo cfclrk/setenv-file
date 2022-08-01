@@ -1,4 +1,4 @@
-;;; setenv-file.el --- Set or unset environment variables from a file  -*- lexical-binding: t; -*-
+;;; setenv-file.el --- Set env variables from a file  -*- lexical-binding: t; -*-
 
 ;; Package-Requires: ((dash "2.17.0") (f "0.20.0") (s "1.12.0"))
 ;; Package-Version: 0.0.1
@@ -7,30 +7,64 @@
 
 ;; Set or unset environment variables from an "env" file.
 ;;
-;; This package provides an interactive function `setenv-file` to set
-;; environment variables defined in a file. With one `C-u` prefix argument,
-;; `setenv-file` unsets the environment variables defined in the file.
+;; This package provides two interactive functions:
 ;;
-;; When used interactively, `setenv-file` prompts for a file, defaulting to the
-;; directory `setenv-file-dir`.
+;; 1.  `setenv-file-set`: set all the env vars in an env file
+;; 2.  `setenv-file-unset`: unset all the env vars in an env file
+;;
+;; When used interactively, each function prompts for a file. By default, the
+;; prompt begins at `setenv-file-dir`.
 ;;
 ;;
 ;; # Usage
 ;;
-;; Create a file with environment variable definitions. For example:
+;; Start by creating an env file in `setenv-file-dir` (by default, `~/.env/`).
+;; For example, create this file in `~/.env/foo`:
 ;;
 ;;     FOO=~/foo
 ;;     BAR=$FOO/bar
 ;;     ОФИС=ДОМ
 ;;     BAZ=nosubst:FOO$BAR
 ;;
-;; Now, set those environment variables in Emacs using `M-x setenv-file`, and
-;; navigate to the file. View your new environment variables with `M-x getenv`.
+;; Note that you can customize `setenv-file-dir` if you like, like this:
 ;;
-;; Optionally, set a default directory where you put such env files using
-;; `setenv-file-dir`:
+;;     (setq setenv-file-dir
+;;           (expand-file-name "~/another/path/"))
 ;;
-;;     (setq setenv-file-dir (expand-file-name "~/.env/"))
+;;
+;; ## Interactive
+;;
+;; Now, set environment variables in Emacs using `M-x setenv-file`, and navigate
+;; to an env file.
+;;
+;; View your new environment variables with `M-x getenv`.
+;;
+;; Unset all of the variables defined in an env file.
+;;
+;;
+;; ## In elisp
+;;
+;; To set env variables defined in `~/.env/foo`:
+;;
+;;     (setenv-file "foo" setenv-file-dir)
+;;
+;;
+;; ## In org-mode
+;;
+;; The example below shows a convenient way to declare and set environment
+;; variables in an `org` document:
+;;
+;;     #+NAME: env
+;;     | Var  | Value           |
+;;     |------+-----------------|
+;;     | FOO  | ~/foo           |
+;;     | BAR  | $FOO/bar        |
+;;     | ОФИС | ДОМ             |
+;;     | BAZ  | nosubst:FOO$BAR |
+;;
+;;     #+begin_src emacs-lisp :var env=env
+;;       (setenv-file-export-pairs env)
+;;     #+end_src
 ;;
 ;;
 ;; # File Format
@@ -66,17 +100,26 @@
 
 (defun setenv-file (file-path)
   "Set or unset environment variables from file FILE-PATH.
+
 When used interactively, `setenv-file' prompts for the file
 to load, defaulting to the directory `source-env-dir'.
 
-The env file F may make use of existing environment variables,
-and tildes are expanded if they are the first character of the
-value. However, other shell-isms will not work.
+The env file FILE-PATH may make use of existing environment
+variables, and tildes are expanded if they are the first
+character of the value. However, other shell-isms will not work.
 
 Prefixed with one \\[universal-argument], unset the environment
 variables defined in file F."
   (interactive (list (read-file-name "ENV file: " setenv-file-dir)))
-  (let* ((lines (s-lines (s-trim (f-read-text file-path))))
+  (setenv-file-str (f-read-text file-path)))
+
+(defun setenv-file-str (str)
+  "Set or unset environment variables from string STR.
+
+Parse STR as though it is a dotenv file.
+
+See the documentation for `setenv-file'."
+  (let* ((lines (s-lines (s-trim str)))
          (pairs (--map (s-split "=" it) lines)))
     (if current-prefix-arg
         (setenv-file-unset-pairs pairs)
@@ -84,15 +127,20 @@ variables defined in file F."
 
 (defun setenv-file-export-pairs (pairs)
   "Add PAIRS to `process-environment'.
+
 PAIRS is a list of pairs, where each pair is an environment
 variable name and value."
   (-each pairs #'setenv-file--export-pair))
 
 (defun setenv-file-unset-pairs (pairs)
   "Remove PAIRS from `process-environment'.
+
 PAIRS is a list of pairs, where each pair is an environment
-variable name and value. The value is discarded; the environment
-variable will be removed regardless of its value."
+variable name and value.
+
+The key of each pair is the environment variable name. The value
+of each pair is discarded, as the environment variable will be
+unset regardless of its value."
   (setenv-file--unset-names (-map 'car pairs)))
 
 ;;; Private
