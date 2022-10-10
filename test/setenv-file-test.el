@@ -50,10 +50,10 @@ multibyte env vars."
       (should (equal nil (getenv "Ф")))
       (should (equal nil (getenv "¥"))))))
 
-(ert-deftest setenv-file-export-pairs ()
-  "Test running `setenv-file-export-pairs' to set env vars."
+(ert-deftest setenv-file-set-pairs ()
+  "Test running `setenv-file-set-pairs' to set env vars."
   (with-process-environment '()
-    (setenv-file-export-pairs '(("A" "a")
+    (setenv-file-set-pairs '(("A" "a")
                                 ("B" "nosubst:R$%!$KP$")))
     (should (equal "a" (getenv "A")))
     (should (equal "R$%!$KP$" (getenv "B")))

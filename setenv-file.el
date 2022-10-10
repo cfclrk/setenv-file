@@ -5,12 +5,13 @@
 
 ;;; Commentary:
 
-;; Set or unset environment variables from an "env" file.
+;; Set or unset environment variables from an "env" or dotenv file.
 ;;
 ;; This package provides two interactive functions:
 ;;
-;; 1.  `setenv-file-set`: set all the env vars in an env file
-;; 2.  `setenv-file-unset`: unset all the env vars in an env file
+;; 1.  `setenv-file`: Set all the environment variables defined in an env file.
+;; 2.  `setenv-file-unset`: Unset all the environment variables defined in an
+;;     env file.
 ;;
 ;; When used interactively, each function prompts for a file. By default, the
 ;; prompt begins at `setenv-file-dir`.
@@ -26,30 +27,26 @@
 ;;     ОФИС=ДОМ
 ;;     BAZ=nosubst:FOO$BAR
 ;;
-;; Note that you can customize `setenv-file-dir` if you like, like this:
+;; Now, you can run:
 ;;
-;;     (setq setenv-file-dir
-;;           (expand-file-name "~/another/path/"))
-;;
-;;
-;; ## Interactive
-;;
-;; Now, set environment variables in Emacs using `M-x setenv-file`, and navigate
-;; to an env file.
-;;
-;; View your new environment variables with `M-x getenv`.
-;;
-;; Unset all of the variables defined in an env file.
+;; -   `M-x setenv-file`, which will prompt you for a file. All the environment
+;;     variables defined in the file will be **set**.
+;; -   `C-u M-x setenv-file`, which will prompt you for a file. All the
+;;     environment variables defined in the file will be **unset**.
 ;;
 ;;
-;; ## In elisp
+;; ## Usage from Elisp
 ;;
 ;; To set env variables defined in `~/.env/foo`:
 ;;
-;;     (setenv-file "foo" setenv-file-dir)
+;;     (setenv-file (expand-file-name "~/.env/foo"))
+;;
+;; Or, if you have a string instead of a file:
+;;
+;;     (setenv-file-str "FOO=foo\nBAR=bar")
 ;;
 ;;
-;; ## In org-mode
+;; ## Usage from org-mode
 ;;
 ;; The example below shows a convenient way to declare and set environment
 ;; variables in an `org` document:
@@ -63,7 +60,7 @@
 ;;     | BAZ  | nosubst:FOO$BAR |
 ;;
 ;;     #+begin_src emacs-lisp :var env=env
-;;       (setenv-file-export-pairs env)
+;;       (setenv-file-set-pairs env)
 ;;     #+end_src
 ;;
 ;;
@@ -111,21 +108,38 @@ character of the value. However, other shell-isms will not work.
 Prefixed with one \\[universal-argument], unset the environment
 variables defined in file F."
   (interactive (list (read-file-name "ENV file: " setenv-file-dir)))
-  (setenv-file-str (f-read-text file-path)))
+  (let ((str (f-read-text file-path)))
+    (if current-prefix-arg
+        (setenv-file-unset-str str)
+      (setenv-file-str str))))
 
-(defun setenv-file-str (str)
-  "Set or unset environment variables from string STR.
-
-Parse STR as though it is a dotenv file.
+(defun setenv-file-unset (file-path)
+  "Unset environment variables from file FILE-PATH.
 
 See the documentation for `setenv-file'."
+  (interactive (list (read-file-name "ENV file: " setenv-file-dir)))
+  (let ((str (f-read-text file-path)))
+    (setenv-file-unset-str str)))
+
+(defun setenv-file-str (str)
+  "Set environment variables from string STR.
+
+Parse STR as an env file. See the documentation for
+`setenv-file'."
   (let* ((lines (s-lines (s-trim str)))
          (pairs (--map (s-split "=" it) lines)))
-    (if current-prefix-arg
-        (setenv-file-unset-pairs pairs)
-      (setenv-file-export-pairs pairs))))
+    (setenv-file-set-pairs pairs)))
 
-(defun setenv-file-export-pairs (pairs)
+(defun setenv-file-unset-str (str)
+  "Unset environment variables from string STR.
+
+Parse STR as an env file. See the documentation for
+`setenv-file'."
+  (let* ((lines (s-lines (s-trim str)))
+         (pairs (--map (s-split "=" it) lines)))
+    (setenv-file-unset-pairs pairs)))
+
+(defun setenv-file-set-pairs (pairs)
   "Add PAIRS to `process-environment'.
 
 PAIRS is a list of pairs, where each pair is an environment

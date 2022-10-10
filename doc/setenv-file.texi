@@ -16,15 +16,16 @@
 @node Top
 @top setenv-file
 
-Set or unset environment variables from an "env" file.
+Set or unset environment variables from an "env" or dotenv file.
 
 This package provides two interactive functions:
 
 @enumerate
 @item
-@samp{setenv-file-set}: set all the env vars in an env file
+@samp{setenv-file}: Set all the environment variables defined in an env file.
 @item
-@samp{setenv-file-unset}: unset all the env vars in an env file
+@samp{setenv-file-unset}: Unset all the environment variables defined in an env
+file.
 @end enumerate
 
 When used interactively, each function prompts for a file. By default, the
@@ -40,9 +41,8 @@ prompt begins at @samp{setenv-file-dir}.
 
 Usage
 
-* Interactive::
-* In elisp::
-* In org-mode::
+* Usage from Elisp::
+* Usage from org-mode::
 
 @end detailmenu
 @end menu
@@ -60,40 +60,39 @@ BAR=$FOO/bar
 BAZ=nosubst:FOO$BAR
 @end example
 
-Note that you can customize @samp{setenv-file-dir} if you like, like this:
+Now, you can run:
 
-@lisp
-(setq setenv-file-dir
-      (expand-file-name "~/another/path/"))
-@end lisp
+@itemize
+@item
+@samp{M-x setenv-file}, which will prompt you for a file. All
+the environment variables defined in the file will be @strong{set}.
+@item
+@samp{C-u M-x setenv-file}, which will prompt you for a file. All
+the environment variables defined in the file will be @strong{unset}.
+@end itemize
 
 @menu
-* Interactive::
-* In elisp::
-* In org-mode::
+* Usage from Elisp::
+* Usage from org-mode::
 @end menu
 
-@node Interactive
-@section Interactive
-
-Now, set environment variables in Emacs using @samp{M-x setenv-file}, and navigate
-to an env file.
-
-View your new environment variables with @samp{M-x getenv}.
-
-Unset all of the variables defined in an env file.
-
-@node In elisp
-@section In elisp
+@node Usage from Elisp
+@section Usage from Elisp
 
 To set env variables defined in @samp{~/.env/foo}:
 
 @lisp
-(setenv-file "foo" setenv-file-dir)
+(setenv-file (expand-file-name "~/.env/foo"))
 @end lisp
 
-@node In org-mode
-@section In org-mode
+Or, if you have a string instead of a file:
+
+@lisp
+(setenv-file-str "FOO=foo\nBAR=bar")
+@end lisp
+
+@node Usage from org-mode
+@section Usage from org-mode
 
 The example below shows a convenient way to declare and set environment
 variables in an @samp{org} document:
@@ -108,7 +107,7 @@ variables in an @samp{org} document:
 | BAZ  | nosubst:FOO$BAR |
 
 #+begin_src emacs-lisp :var env=env
-  (setenv-file-export-pairs env)
+  (setenv-file-set-pairs env)
 #+end_src
 @end example
 

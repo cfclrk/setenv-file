@@ -7,12 +7,14 @@ File: setenv-file.info,  Node: Top,  Next: Usage,  Up: (dir)
 setenv-file
 ***********
 
-Set or unset environment variables from an "env" file.
+Set or unset environment variables from an "env" or dotenv file.
 
    This package provides two interactive functions:
 
-  1. ‘setenv-file-set’: set all the env vars in an env file
-  2. ‘setenv-file-unset’: unset all the env vars in an env file
+  1. ‘setenv-file’: Set all the environment variables defined in an env
+     file.
+  2. ‘setenv-file-unset’: Unset all the environment variables defined in
+     an env file.
 
    When used interactively, each function prompts for a file.  By
 default, the prompt begins at ‘setenv-file-dir’.
@@ -26,9 +28,8 @@ default, the prompt begins at ‘setenv-file-dir’.
 
 Usage
 
-* Interactive::
-* In elisp::
-* In org-mode::
+* Usage from Elisp::
+* Usage from org-mode::
 
 
 
@@ -45,45 +46,37 @@ Start by creating an env file in ‘setenv-file-dir’ (by default,
      ОФИС=ДОМ
      BAZ=nosubst:FOO$BAR
 
-   Note that you can customize ‘setenv-file-dir’ if you like, like this:
+   Now, you can run:
 
-     (setq setenv-file-dir
-           (expand-file-name "~/another/path/"))
+   • ‘M-x setenv-file’, which will prompt you for a file.  All the
+     environment variables defined in the file will be *set*.
+   • ‘C-u M-x setenv-file’, which will prompt you for a file.  All the
+     environment variables defined in the file will be *unset*.
 
 * Menu:
 
-* Interactive::
-* In elisp::
-* In org-mode::
+* Usage from Elisp::
+* Usage from org-mode::
 
 
-File: setenv-file.info,  Node: Interactive,  Next: In elisp,  Up: Usage
+File: setenv-file.info,  Node: Usage from Elisp,  Next: Usage from org-mode,  Up: Usage
 
-1.1 Interactive
-===============
-
-Now, set environment variables in Emacs using ‘M-x setenv-file’, and
-navigate to an env file.
-
-   View your new environment variables with ‘M-x getenv’.
-
-   Unset all of the variables defined in an env file.
-
-
-File: setenv-file.info,  Node: In elisp,  Next: In org-mode,  Prev: Interactive,  Up: Usage
-
-1.2 In elisp
-============
+1.1 Usage from Elisp
+====================
 
 To set env variables defined in ‘~/.env/foo’:
 
-     (setenv-file "foo" setenv-file-dir)
+     (setenv-file (expand-file-name "~/.env/foo"))
+
+   Or, if you have a string instead of a file:
+
+     (setenv-file-str "FOO=foo\nBAR=bar")
 
 
-File: setenv-file.info,  Node: In org-mode,  Prev: In elisp,  Up: Usage
+File: setenv-file.info,  Node: Usage from org-mode,  Prev: Usage from Elisp,  Up: Usage
 
-1.3 In org-mode
-===============
+1.2 Usage from org-mode
+=======================
 
 The example below shows a convenient way to declare and set environment
 variables in an ‘org’ document:
@@ -97,7 +90,7 @@ variables in an ‘org’ document:
      | BAZ  | nosubst:FOO$BAR |
 
      #+begin_src emacs-lisp :var env=env
-       (setenv-file-export-pairs env)
+       (setenv-file-set-pairs env)
      #+end_src
 
 
@@ -118,11 +111,10 @@ so most shell-isms will not work.  However, the env file may:
 
 Tag Table:
 Node: Top83
-Node: Usage659
-Node: Interactive1185
-Node: In elisp1510
-Node: In org-mode1725
-Node: File Format2254
+Node: Usage719
+Node: Usage from Elisp1389
+Node: Usage from org-mode1717
+Node: File Format2275
 
 End Tag Table
 

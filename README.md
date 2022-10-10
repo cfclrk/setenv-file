@@ -1,11 +1,12 @@
 # setenv-file
 
-Set or unset environment variables from an "env" file.
+Set or unset environment variables from an "env" or dotenv file.
 
 This package provides two interactive functions:
 
-1.  `setenv-file-set`: set all the env vars in an env file
-2.  `setenv-file-unset`: unset all the env vars in an env file
+1.  `setenv-file`: Set all the environment variables defined in an env file.
+2.  `setenv-file-unset`: Unset all the environment variables defined in an env
+    file.
 
 When used interactively, each function prompts for a file. By default, the
 prompt begins at `setenv-file-dir`.
@@ -41,34 +42,30 @@ BAR=$FOO/bar
 BAZ=nosubst:FOO$BAR
 ```
 
-Note that you can customize `setenv-file-dir` if you like, like this:
+Now, you can run:
 
-```emacs-lisp
-(setq setenv-file-dir
-      (expand-file-name "~/another/path/"))
-```
-
-
-## Interactive
-
-Now, set environment variables in Emacs using `M-x setenv-file`, and navigate to
-an env file.
-
-View your new environment variables with `M-x getenv`.
-
-Unset all of the variables defined in an env file.
+-   `M-x setenv-file`, which will prompt you for a file. All the environment
+    variables defined in the file will be **set**.
+-   `C-u M-x setenv-file`, which will prompt you for a file. All the environment
+    variables defined in the file will be **unset**.
 
 
-## In elisp
+## Usage from Elisp
 
 To set env variables defined in `~/.env/foo`:
 
 ```emacs-lisp
-(setenv-file "foo" setenv-file-dir)
+(setenv-file (expand-file-name "~/.env/foo"))
+```
+
+Or, if you have a string instead of a file:
+
+```emacs-lisp
+(setenv-file-str "FOO=foo\nBAR=bar")
 ```
 
 
-## In org-mode
+## Usage from org-mode
 
 The example below shows a convenient way to declare and set environment
 variables in an `org` document:
@@ -83,7 +80,7 @@ variables in an `org` document:
 | BAZ  | nosubst:FOO$BAR |
 
 #+begin_src emacs-lisp :var env=env
-  (setenv-file-export-pairs env)
+  (setenv-file-set-pairs env)
 #+end_src
 ```
 
