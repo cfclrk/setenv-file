@@ -64,11 +64,11 @@ Now, you can run:
 
 @itemize
 @item
-@samp{M-x setenv-file}, which will prompt you for a file. All
-the environment variables defined in the file will be @strong{set}.
+@samp{M-x setenv-file}, which will prompt you for a file. All the environment
+variables defined in the file will be @strong{set}.
 @item
-@samp{C-u M-x setenv-file}, which will prompt you for a file. All
-the environment variables defined in the file will be @strong{unset}.
+@samp{M-x setenv-file-unset}, which will prompt you for a file. All the
+environment variables defined in the file will be @strong{unset}.
 @end itemize
 
 @menu
@@ -125,6 +125,9 @@ Use existing environment variables
 Define an environment variable and use it in successive lines
 @item
 A @samp{~} is expanded if it is the first character in the value
+@item
+If a value starts with `nosubst:`, no variable substitution will be
+performed. You need this if there is a literal @samp{$} in the value.
 @end itemize
 
 @bye

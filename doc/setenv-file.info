@@ -50,7 +50,7 @@ Start by creating an env file in ‘setenv-file-dir’ (by default,
 
    • ‘M-x setenv-file’, which will prompt you for a file.  All the
      environment variables defined in the file will be *set*.
-   • ‘C-u M-x setenv-file’, which will prompt you for a file.  All the
+   • ‘M-x setenv-file-unset’, which will prompt you for a file.  All the
      environment variables defined in the file will be *unset*.
 
 * Menu:
@@ -106,15 +106,17 @@ so most shell-isms will not work.  However, the env file may:
    • Use existing environment variables
    • Define an environment variable and use it in successive lines
    • A ‘~’ is expanded if it is the first character in the value
+   • If a value starts with ‘nosubst:‘, no variable substitution will be
+     performed.  You need this if there is a literal ‘$’ in the value.
 
 
 
 Tag Table:
 Node: Top83
 Node: Usage719
-Node: Usage from Elisp1389
-Node: Usage from org-mode1717
-Node: File Format2275
+Node: Usage from Elisp1391
+Node: Usage from org-mode1719
+Node: File Format2277
 
 End Tag Table
 

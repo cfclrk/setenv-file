@@ -31,7 +31,7 @@
 ;;
 ;; -   `M-x setenv-file`, which will prompt you for a file. All the environment
 ;;     variables defined in the file will be **set**.
-;; -   `C-u M-x setenv-file`, which will prompt you for a file. All the
+;; -   `M-x setenv-file-unset`, which will prompt you for a file. All the
 ;;     environment variables defined in the file will be **unset**.
 ;;
 ;;
@@ -73,6 +73,8 @@
 ;; -   Use existing environment variables
 ;; -   Define an environment variable and use it in successive lines
 ;; -   A `~` is expanded if it is the first character in the value
+;; -   If a value starts with \`nosubst:\`, no variable substitution will be
+;;     performed. You need this if there is a literal `$` in the value.
 ;;
 ;;; Code:
 
